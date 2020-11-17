@@ -1,0 +1,18 @@
+$text-dark-color: black;
+
+.link {
+    background-color: gray;
+    color: $text-dark-color;
+    max-width: 100%;
+    display: flex;
+    margin-bottom: 1rem;
+    border: .2rem solid $text-dark-color;
+    padding: .5em;
+    justify-content: center;
+    font-weight: bold;
+    text-decoration: none;
+    p {
+        margin: 0;
+        text-align: center;
+    }
+}
