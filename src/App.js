@@ -1,12 +1,15 @@
 import './App.scss';
 import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import Links from './containers/links/Links';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
 // import Admin from './containers/admin/Admin';
 
 function App() {
   return (
     <Router>
-      <main>
+      <main style={{minHeight:'100vh', display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
+      <Header/>
       <Switch>
         <Route path="/" exact>
           <Links/>
@@ -19,6 +22,7 @@ function App() {
         </Route> */}
         <Redirect to="/links" />
       </Switch>
+      <Footer />
       </main>
     </Router>
   );
@@ -33,3 +37,6 @@ export default App;
 // 4- Create Admin portal - low
 // 5- Create social network link list - medium
 // 6- Create Avatar header - high
+// 7- Check PWA status
+// 8- Check accessibility
+// 9- Add Typescript

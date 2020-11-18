@@ -1,4 +1,5 @@
 import React from 'react';
+import Avatar from '../avatar/Avatar';
 import FancyLink from '../fancy-link/FancyLink';
 import './LinkList.scss';
 
@@ -16,12 +17,15 @@ function LinkList(props) {
           name: 'O QUE É O PORTUGUÊS LÚDICO?',
           icon: 'test',
           backgorundColor: 'pink',
-          textColor: 'white'
+          textColor: 'black'
         }
     ]
 
+    document.title = 'Links List | FindMeAt'
+
     return (
         <div className="link-list">
+            <Avatar />
             {
               LINKS.map(link => {
                 return <FancyLink 
