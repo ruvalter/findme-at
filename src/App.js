@@ -8,7 +8,7 @@ import Footer from './components/footer/Footer';
 function App() {
   return (
     <Router>
-      <main style={{minHeight:'100vh', display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
+      <main style={{minHeight:'100vh', display:'flex', flexDirection:'column', justifyContent:'space-between', paddingTop: '3rem'}}>
       <Header/>
       <Switch>
         <Route path="/" exact>

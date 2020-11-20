@@ -99,5 +99,21 @@ $text-dark-color: black;
         transition: box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s;
         padding: 6px 56px;
         min-height: 44px;
+        & .link__icon {
+            left: 4px;
+            border-radius: 0px;
+            display: flex;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            overflow: hidden;
+            -webkit-box-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            align-items: center;
+            width: 32px;
+            height: 32px;
+        }
     }
 }

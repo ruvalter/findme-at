@@ -1,12 +1,13 @@
 import React from 'react';
+import SocialNetwork from '../social-network/SocialNetwork';
 
 function Footer(props) {
     return (
         <div style={{
             width:'100%',
-            height:'3rem',
             display: 'flex',
-            justifyContent: 'center'
+            flexDirection: 'column',
+            alignItems: 'center'
         }}>
             <svg 
                 style={{ width: '10rem', marginBottom:'1rem'}}

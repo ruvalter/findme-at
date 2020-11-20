@@ -1,0 +1,8 @@
+.social-network {
+    &__icon {
+        transition: transform 0s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+        &:hover {
+            transform: scale(1.075);
+        }
+    }
+}
