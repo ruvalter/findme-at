@@ -1,82 +1,7 @@
+
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
-   version="1.1"
-   id="svg8"
-   inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
-   sodipodi:docname="findme-at-logo-full.svg"
-   inkscape:export-filename="/Users/ruvalter/Desktop/findme-at-logo.png"
-   inkscape:export-xdpi="4.2646613"
-   inkscape:export-ydpi="4.2646613">
-  <defs
-     id="defs2">
-    <rect
-       x="75.837811"
-       y="58.078323"
-       width="121.43649"
-       height="32.639058"
-       id="rect846" />
-  </defs>
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="1.7321389"
-     inkscape:cx="373.67348"
-     inkscape:cy="409.38705"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
-     inkscape:document-rotation="0"
-     showgrid="false"
-     showguides="false"
-     inkscape:guide-bbox="true"
-     inkscape:window-width="1680"
-     inkscape:window-height="1050"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
-     inkscape:pagecheckerboard="true">
-    <sodipodi:guide
-       position="131.96851,203.72406"
-       orientation="0,-1"
-       id="guide925" />
-    <sodipodi:guide
-       position="130.73598,203.23985"
-       orientation="1,0"
-       id="guide927" />
-    <sodipodi:guide
-       position="129.63551,204.82454"
-       orientation="0,-1"
-       id="guide929" />
-  </sodipodi:namedview>
-  <metadata
-     id="metadata5">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <g
-     inkscape:label="Link Arrow"
-     inkscape:groupmode="layer"
-     id="layer1"
-     style="display:inline">
+   viewBox="0 0 210 297">
     <path
        style="fill:#f2f2f2;fill-opacity:1;stroke-width:0.194926"
        d="m 44.097743,87.055176 c -2.91141,-1.271151 -4.754148,-4.866185 -4.378858,-8.542811 0.159781,-1.56535 1.08675,-3.809236 1.727279,-4.181172 0.621834,-0.361077 1.34544,0.01737 1.683383,0.880458 0.209003,0.533772 0.183399,0.722711 -0.248176,1.831137 -0.559993,1.438232 -0.646634,3.426749 -0.195301,4.482396 0.341357,0.798418 1.274251,1.882436 2.010797,2.336539 0.936873,0.577606 2.449477,0.455669 3.488444,-0.281218 1.175709,-0.833867 8.617587,-10.013403 8.981003,-11.078043 0.211321,-0.619071 0.373317,-1.545749 0.202374,-2.443917 -0.144976,-0.761741 -0.655778,-2.358854 -1.146497,-2.72885 -0.7777,-0.106 -2.129049,2.200142 -2.129049,2.200142 -0.09839,0.146975 -0.20672,0.356286 -0.374047,0.311298 -0.160013,-0.05447 -0.193543,-0.204852 -0.184057,-0.454812 v -3.017539 -3.264971 c 0.0033,-0.143392 0.01535,-0.290324 0.117871,-0.424003 0.107553,-0.09164 0.226458,-0.102666 0.381869,-0.105656 l 2.803699,0.01449 3.264382,0.01513 c 0.190365,0.0032 0.329775,0.01619 0.340803,0.111171 0.01223,0.120169 -0.108466,0.215111 -0.221353,0.301928 0,0 -2.394518,1.99431 -1.926078,2.679758 0.947533,1.386499 1.829894,3.570362 1.744773,5.3702 -0.139828,2.956621 -0.492619,3.57501 -5.555269,9.737543 -5.084711,6.189388 -5.410923,6.458563 -7.9742,6.579923 -1.126937,0.05336 -1.724349,-0.02807 -2.413792,-0.329115 z"
@@ -85,24 +10,14 @@
     <text
        xml:space="preserve"
        id="text844"
-       style="font-style:normal;font-weight:normal;font-size:10.58329999999999949px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect846);fill:#f9f9f9;fill-opacity:1;stroke:none;"
-       transform="matrix(1.3180044,0,0,1.5443732,-33.272416,-32.854955)"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58329999999999949px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect846);fill:#f9f9f9;fill-opacity:1;stroke:none;"
+       transform="matrix(1.8908688,0,0,2.6392176,-79.103828,-89.34977)"><tspan
          x="75.837891"
-         y="80.317259"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'PingFang TC';-inkscape-font-specification:'PingFang TC, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#f9f9f9">find</tspan><tspan
-           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:22.5778px;font-family:'PingFang TC';-inkscape-font-specification:'PingFang TC, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#f9f9f9">M</tspan><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'PingFang TC';-inkscape-font-specification:'PingFang TC, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#f9f9f9">e</tspan><tspan
-           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:22.5778px;font-family:'PingFang TC';-inkscape-font-specification:'PingFang TC, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#f9f9f9">A</tspan><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'PingFang TC';-inkscape-font-specification:'PingFang TC, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#f9f9f9">t</tspan></tspan></text>
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Link Plain"
-     style="display:inline">
+         y="67.73359"><tspan>link explorer</tspan></tspan></text>
+
+
     <path
        style="display:inline;fill:#f9f9f9;fill-opacity:1;stroke-width:0.206736"
        d="m 30.620379,94.489466 c -1.942831,-0.872621 -3.415613,-2.489538 -4.260511,-4.67748 -0.425701,-1.102387 -0.494284,-1.580953 -0.493606,-3.444424 0.0012,-3.486279 0.159051,-3.774447 5.887227,-10.751964 5.745313,-6.998392 5.911202,-7.130805 8.933426,-7.130805 1.676251,0 1.990409,0.06814 2.948824,0.639611 2.837074,1.691645 4.461397,5.40546 3.921197,8.965335 -0.261465,1.723016 -0.979327,3.596176 -1.510461,3.941327 -0.557014,0.36197 -1.423624,0.280824 -1.737317,-0.162677 -0.546634,-0.772822 -0.551008,-1.231547 -0.02313,-2.42618 0.757472,-1.714193 0.742334,-3.73875 -0.03943,-5.274109 -0.830916,-1.631896 -2.028976,-2.465549 -3.54331,-2.465549 -0.931224,0 -1.349135,0.123829 -2.003612,0.593658 -0.454827,0.326516 -2.778529,2.985438 -5.163778,5.908718 -4.680942,5.736812 -4.848384,6.025907 -4.811281,8.307057 0.06206,3.815394 3.559587,6.076538 6.318711,4.085029 0.421104,-0.303944 1.608319,-1.584946 2.638256,-2.84665 1.969764,-2.413041 2.388846,-2.667543 3.22356,-1.957631 0.539975,0.459234 0.693039,1.351327 0.364301,2.123222 -0.148326,0.348283 -1.19301,1.716392 -2.321522,3.040252 -2.647647,3.105955 -3.587298,3.7032 -5.953149,3.783798 -1.06879,0.03642 -1.940257,-0.05554 -2.374398,-0.250538 z"
        id="path96" />
-  </g>
 </svg>

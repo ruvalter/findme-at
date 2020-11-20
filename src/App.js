@@ -11,16 +11,13 @@ function App() {
       <main style={{minHeight:'100vh', display:'flex', flexDirection:'column', justifyContent:'space-between', paddingTop: '3rem'}}>
       <Header/>
       <Switch>
-        <Route path="/" exact>
-          <Links/>
-        </Route>
-        <Route path="/links" exact>
+        <Route path="/portuguesludico" exact>
           <Links/>
         </Route>
         {/* <Route path="/admin" exact>
           <Admin/>
         </Route> */}
-        <Redirect to="/links" />
+        <Redirect to="/portuguesludico" />
       </Switch>
       <Footer />
       </main>

@@ -99,7 +99,7 @@ function LinkList(props) {
         }
     ]
 
-    document.title = 'Links List | FindMeAt'
+    document.title = 'Links | Português Lúdico';
 
     return (
         <div className="link-list">
