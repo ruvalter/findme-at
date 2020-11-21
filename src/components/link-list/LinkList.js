@@ -91,7 +91,7 @@ function LinkList(props) {
           textColor: 'black'
         },
         {
-          url: '',
+          url: 'https://api.whatsapp.com/send?phone=14168027450',
           name: 'INSCREVA-SE COM SEU CONTATO DE CELULAR',
           icon: 'whatsapp',
           backgorundColor: backgroundColours.blue,

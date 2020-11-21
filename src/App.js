@@ -3,7 +3,7 @@ import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-d
 import Links from './containers/links/Links';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
-// import Admin from './containers/admin/Admin';
+import Admin from './containers/admin/Admin';
 
 function App() {
   return (
@@ -14,9 +14,9 @@ function App() {
         <Route path="/portuguesludico" exact>
           <Links/>
         </Route>
-        {/* <Route path="/admin" exact>
+        <Route path="/admin" exact>
           <Admin/>
-        </Route> */}
+        </Route>
         <Redirect to="/portuguesludico" />
       </Switch>
       <Footer />
@@ -28,12 +28,18 @@ function App() {
 export default App;
 
 // TODO: 
-// 1- Add project to github - high
-// 2- Create project on firebase - frontend - high
+//
+// For now:
+//
+// 4- Create Admin portal - high
 // 3- Create project on firebase - backend - low
-// 4- Create Admin portal - low
-// 5- Create social network link list - medium
-// 6- Create Avatar header - high
+// 1- Add project to github - done
+// 2- Create project on firebase - frontend - done
+// 5- Create social network link list - done
+// 6- Create Avatar header - done
+//
+// Later
+//
 // 7- Check PWA status
 // 8- Check accessibility
 // 9- Add Typescript
