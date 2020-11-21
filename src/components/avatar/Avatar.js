@@ -1,7 +1,7 @@
 import React from 'react';
 import './Avatar.scss';
 
-function Avatar(props) {
+function Avatar() {
     return (
         <div className="avatar">
             <div className="image-container">
