@@ -1,7 +1,5 @@
 import React from 'react';
 import './FancyLink.scss';
-
-import { GoLinkExternal } from 'react-icons/go';
 import SvgIcon from '../svg-icon/SvgIcon';
 
 function FancyLink({ backgroundColor, icon, link, linkName, textColor }) {
