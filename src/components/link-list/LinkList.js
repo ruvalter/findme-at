@@ -99,8 +99,6 @@ function LinkList(props) {
         }
     ]
 
-    document.title = 'Links | Português Lúdico';
-
     return (
         <div className="link-list">
             <Avatar />

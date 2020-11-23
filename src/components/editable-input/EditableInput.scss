@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Karla:regular,bold,italic');
+
+.link {
+  &-name,
+  &-url {
+    &__input,
+    &__text {
+      font-size: 16px;
+      font-weight: 300;
+      font-family: 'Karla';
+      border: none;
+      padding: 0;
+      margin: 0;
+      outline: none;
+      &:focus {
+        border-bottom: 1px solid rgb(3, 122, 190);
+      }
+    }
+    &__input {
+      width: 100%;
+    }
+    &__text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

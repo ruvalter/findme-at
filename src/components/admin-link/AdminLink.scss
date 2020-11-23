@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css?family=Karla:regular,bold,italic");
+
+.drag-handle {
+  &__icon {
+    transform: translateX(-20px);
+    transition: transform 300ms ease-in-out;
+  }
+  &:hover {
+    & .drag-handle__icon {
+      transform: translateX(0);
+    }
+  }
+}
+
+.link {
+  &-name {
+    &__input,
+    &__text {
+      font-size: 18px;
+      font-weight: bold;
+      font-family: "Karla";
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+    &__input {
+      width: 100%;
+    }
+    &__text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
