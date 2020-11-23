@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { GrDrag } from 'react-icons/gr';
+import { MdDeleteSweep } from 'react-icons/md';
 import EditableInput from '../editable-input/EditableInput';
 import './AdminLink.scss';
 
@@ -83,8 +84,16 @@ const AdminLink = ({ link, handleDrag, handleDelete }) => {
           type='url'
           isEditing={linkObj.urlEditing}
         />
-        <button onClick={() => handleDelete(linkObj.name)}>
-          <GrDrag />
+        <button
+          onClick={() => handleDelete(linkObj.name)}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '1.5rem',
+          }}
+        >
+          <MdDeleteSweep />
         </button>
       </div>
     </div>
