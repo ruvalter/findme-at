@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import AdminLink from '../../components/admin-link/AdminLink';
-import { LINKS } from '../../shared/app-constants';
+import { backgroundColours, LINKS } from '../../shared/app-constants';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { FiPlus } from 'react-icons/fi';
 
 const Admin = () => {
   document.title = 'Admin | Link Explorer';
@@ -16,9 +17,23 @@ const Admin = () => {
     updateLinks(items);
   };
 
-  const handleDelete = (name) => {
-    const filteredList = links.filter((link) => link.name !== name);
+  const handleDelete = (id) => {
+    const filteredList = links.filter((link) => link.id !== id);
+
     updateLinks(filteredList);
+  };
+
+  const handleNewLink = () => {
+    const newLink = {
+      url: 'Add a URL',
+      name: 'Choose a label for this link',
+      icon: 'new',
+      backgorundColor: backgroundColours.purple,
+      textColor: 'black',
+    };
+    const newLinkList = [...links];
+    newLinkList.unshift(newLink);
+    updateLinks(newLinkList);
   };
 
   const adminLinks = links.map((item, index) => {
@@ -55,10 +70,28 @@ const Admin = () => {
           maxWidth: '40rem',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          alignItems: 'stretch',
         }}
       >
-        <h1>My Links</h1>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            marginBottom: '2rem',
+          }}
+        >
+          <h1 style={{ margin: 0, marginRight: '1rem' }}>My Links</h1>
+          <button
+            style={{
+              bakground: 'none',
+              backgroundColor: 'transparent',
+              borderRadius: '5px',
+            }}
+            onClick={handleNewLink}
+          >
+            <FiPlus /> New Link
+          </button>
+        </div>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId='adminLinks'>
             {(provided) => (

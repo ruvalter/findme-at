@@ -85,7 +85,7 @@ const AdminLink = ({ link, handleDrag, handleDelete }) => {
           isEditing={linkObj.urlEditing}
         />
         <button
-          onClick={() => handleDelete(linkObj.name)}
+          onClick={() => handleDelete(linkObj.id)}
           style={{
             background: 'none',
             border: 'none',
