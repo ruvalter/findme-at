@@ -19,12 +19,12 @@ function LinkList({ links }) {
         {links.map((link) => {
           return (
             <FancyLink
-              key={link.name}
+              key={link.id}
               link={link.url}
               linkName={link.name}
               icon={link.icon}
-              backgroundColor={link.backgorundColor}
-              textColor={link.textColor}
+              backgroundColor={backgroundColours.yellow}
+              textColor='black'
             />
           );
         })}

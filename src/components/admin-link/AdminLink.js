@@ -4,7 +4,7 @@ import { MdDeleteSweep } from 'react-icons/md';
 import EditableInput from '../editable-input/EditableInput';
 import './AdminLink.scss';
 
-const AdminLink = ({ link, handleDrag, handleDelete }) => {
+const AdminLink = ({ link, handleDrag, handleDelete, handleUpdate }) => {
   const [linkObj, updateLink] = useState(link);
   const nameInput = useRef();
   const urlInput = useRef();
@@ -39,6 +39,7 @@ const AdminLink = ({ link, handleDrag, handleDelete }) => {
     } else if (event.target.className === 'link-url__input') {
       newLink.urlEditing = false;
     }
+    handleUpdate(newLink.id, { name: event.target.value });
     updateLink(newLink);
   };
 

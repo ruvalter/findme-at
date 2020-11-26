@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AdminLink from '../../components/admin-link/AdminLink';
-import { backgroundColours, LINKS } from '../../shared/app-constants';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { FiPlus } from 'react-icons/fi';
+import LinksService from '../../shared/links-service';
 
 const Admin = () => {
   document.title = 'Admin | Link Explorer';
-  const [links, updateLinks] = useState(LINKS);
+  const [links, updateLinks] = useState([]);
+  const linkService = useCallback(() => new LinksService(), []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      updateLinks(await linkService().getAllLinks());
+    };
+    fetchData();
+  }, [linkService]);
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
@@ -19,8 +27,15 @@ const Admin = () => {
 
   const handleDelete = (id) => {
     const filteredList = links.filter((link) => link.id !== id);
+    linkService()
+      .deleteLink(id)
+      .then(() => {
+        updateLinks(filteredList);
+      });
+  };
 
-    updateLinks(filteredList);
+  const handleUpdate = (id, payload) => {
+    return linkService().updateLink(id, payload);
   };
 
   const handleNewLink = () => {
@@ -28,39 +43,45 @@ const Admin = () => {
       url: 'Add a URL',
       name: 'Choose a label for this link',
       icon: 'new',
-      backgorundColor: backgroundColours.purple,
-      textColor: 'black',
     };
-    const newLinkList = [...links];
-    newLinkList.unshift(newLink);
-    updateLinks(newLinkList);
+
+    linkService()
+      .addNewLink(newLink)
+      .then((docRef) => {
+        const newLinkList = [...links];
+        newLinkList.unshift({ ...newLink, id: docRef.id });
+        updateLinks(newLinkList);
+      });
   };
 
-  const adminLinks = links.map((item, index) => {
-    return (
-      <Draggable key={item.name} draggableId={item.name} index={index}>
-        {(provided) => (
-          <li
-            ref={provided.innerRef}
-            {...{
-              ...provided.draggableProps,
-              style: {
-                ...provided.draggableProps.style,
-                listStyle: 'none',
-                marginBottom: '1rem',
-              },
-            }}
-          >
-            <AdminLink
-              link={item}
-              handleDrag={{ ...provided.dragHandleProps }}
-              handleDelete={handleDelete}
-            />
-          </li>
-        )}
-      </Draggable>
-    );
-  });
+  const adminLinks = !(links && links.length)
+    ? null
+    : links.map((item, index) => {
+        return (
+          <Draggable key={item.id} draggableId={item.id} index={index}>
+            {(provided) => (
+              <li
+                ref={provided.innerRef}
+                {...{
+                  ...provided.draggableProps,
+                  style: {
+                    ...provided.draggableProps.style,
+                    listStyle: 'none',
+                    marginBottom: '1rem',
+                  },
+                }}
+              >
+                <AdminLink
+                  link={item}
+                  handleUpdate={handleUpdate}
+                  handleDrag={{ ...provided.dragHandleProps }}
+                  handleDelete={handleDelete}
+                />
+              </li>
+            )}
+          </Draggable>
+        );
+      });
 
   return (
     <>
