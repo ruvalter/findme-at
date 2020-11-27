@@ -1,13 +1,26 @@
-@import url("https://fonts.googleapis.com/css?family=Karla:regular,bold,italic");
+@import url('https://fonts.googleapis.com/css?family=Karla:regular,bold,italic');
 
-.drag-handle {
-  &__icon {
-    transform: translateX(-20px);
-    transition: transform 300ms ease-in-out;
+.admin-links {
+  .drag-handle {
+    background-color: #27ea9c;
+    &__icon {
+      transform: translateX(-20px);
+      transition: transform 300ms ease-in-out;
+    }
+    &--dragging {
+      background-color: #88ffcf;
+      & .drag-handle__icon {
+        transform: translateX(0);
+      }
+    }
   }
-  &:hover {
-    & .drag-handle__icon {
-      transform: translateX(0);
+  &--stable {
+    .drag-handle {
+      &:hover {
+        & .drag-handle__icon {
+          transform: translateX(0);
+        }
+      }
     }
   }
 }
@@ -18,7 +31,7 @@
     &__text {
       font-size: 18px;
       font-weight: bold;
-      font-family: "Karla";
+      font-family: 'Karla';
       border: none;
       padding: 0;
       margin: 0;

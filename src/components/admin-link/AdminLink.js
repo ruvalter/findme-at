@@ -4,7 +4,13 @@ import { MdDeleteSweep } from 'react-icons/md';
 import EditableInput from '../editable-input/EditableInput';
 import './AdminLink.scss';
 
-const AdminLink = ({ link, handleDrag, handleDelete, handleUpdate }) => {
+const AdminLink = ({
+  link,
+  handleDrag,
+  handleDelete,
+  handleUpdate,
+  isDragging,
+}) => {
   const [linkObj, updateLink] = useState(link);
   const nameInput = useRef();
   const urlInput = useRef();
@@ -45,10 +51,12 @@ const AdminLink = ({ link, handleDrag, handleDelete, handleUpdate }) => {
 
   return (
     <div
-      className='drag-handle'
+      className={`drag-handle ${
+        isDragging ? 'drag-handle--dragging' : 'drag-handle--stable'
+      }`}
       style={{
         display: 'flex',
-        backgroundColor: 'white',
+        border: '1px solid black',
         borderRadius: '5px',
         padding: '1rem',
         paddingLeft: 0,

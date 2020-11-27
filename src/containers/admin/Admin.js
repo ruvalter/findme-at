@@ -3,6 +3,7 @@ import AdminLink from '../../components/admin-link/AdminLink';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { FiPlus } from 'react-icons/fi';
 import LinksService from '../../shared/links-service';
+import './Admin.scss';
 
 const Admin = () => {
   document.title = 'Admin | Link Explorer';
@@ -21,6 +22,8 @@ const Admin = () => {
     const items = Array.from(links);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
+
+    linkService().updateOrder(items);
 
     updateLinks(items);
   };
@@ -59,7 +62,7 @@ const Admin = () => {
     : links.map((item, index) => {
         return (
           <Draggable key={item.id} draggableId={item.id} index={index}>
-            {(provided) => (
+            {(provided, snapshot) => (
               <li
                 ref={provided.innerRef}
                 {...{
@@ -73,6 +76,7 @@ const Admin = () => {
               >
                 <AdminLink
                   link={item}
+                  isDragging={snapshot.isDragging}
                   handleUpdate={handleUpdate}
                   handleDrag={{ ...provided.dragHandleProps }}
                   handleDelete={handleDelete}
@@ -115,9 +119,13 @@ const Admin = () => {
         </div>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId='adminLinks'>
-            {(provided) => (
+            {(provided, snapshot) => (
               <ul
-                className='adminLinks'
+                className={`admin-links ${
+                  snapshot.isDraggingOver
+                    ? 'admin-links--dragging'
+                    : 'admin-links--stable'
+                }`}
                 style={{ margin: '0', padding: 0, width: '100%' }}
                 {...provided.droppableProps}
                 ref={provided.innerRef}
