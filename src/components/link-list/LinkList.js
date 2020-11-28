@@ -6,24 +6,25 @@ import './LinkList.scss';
 
 function LinkList({ links }) {
   const backgroundColours = {
-    yellow: 'rgb(255, 194, 19)',
-    blue: 'rgb(11, 175, 255)',
-    pink: 'rgb(237, 99, 210)',
-    purple: 'rgb(117, 81, 231)',
+    1: 'rgb(255, 194, 19)',
+    2: 'rgb(11, 175, 255)',
+    3: 'rgb(237, 99, 210)',
+    4: 'rgb(117, 81, 231)',
   };
 
   return (
     <div className='link-list'>
       <Avatar />
       <div style={{ marginBottom: '3rem' }}>
-        {links.map((link) => {
+        {links.map((link, index) => {
           return (
             <FancyLink
               key={link.id}
               link={link.url}
               linkName={link.name}
+              type={index % 4}
               icon={link.icon}
-              backgroundColor={backgroundColours.yellow}
+              backgroundColor={backgroundColours[(index % 4) + 1]}
               textColor='black'
             />
           );
