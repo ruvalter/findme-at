@@ -19,25 +19,42 @@ const Admin = () => {
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
-    const items = Array.from(links);
+
+    const linkArr = Object.keys(links).map((id) => links[id]);
+    const items = linkArr.sort((a, b) => a.order - b.order);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    linkService().updateOrder(items);
+    const linksEntity = {};
+    items.forEach((item, index) => {
+      linksEntity[item.id] = { ...item, order: index };
+    });
+    updateLinks(linksEntity);
 
-    updateLinks(items);
+    linkService().updateOrder(items);
   };
 
   const handleDelete = (id) => {
-    const filteredList = links.filter((link) => link.id !== id);
+    const newList = { ...links };
+    delete newList[id];
+
     linkService()
       .deleteLink(id)
       .then(() => {
-        updateLinks(filteredList);
+        updateLinks(newList);
       });
   };
 
   const handleUpdate = (id, payload) => {
+    const newList = {
+      ...links,
+      [id]: {
+        ...links[id],
+        ...payload,
+      },
+    };
+
+    updateLinks(newList);
     return linkService().updateLink(id, payload);
   };
 
@@ -46,46 +63,75 @@ const Admin = () => {
       url: 'Add a URL',
       name: 'Choose a label for this link',
       icon: 'new',
+      order: 0,
+      id: 'new',
     };
 
+    const newList = {
+      ...links,
+    };
+
+    Object.keys(newList).forEach((id) => {
+      newList[id].order++;
+    });
+
+    newList['new'] = {
+      ...newLink,
+    };
+
+    updateLinks(newList);
+
+    const linkArr = Object.keys(links).map((id) => links[id]);
+    const items = linkArr.sort((a, b) => a.order - b.order);
+
     linkService()
-      .addNewLink(newLink)
+      .addNewLink(newLink, items)
       .then((docRef) => {
-        const newLinkList = [...links];
-        newLinkList.unshift({ ...newLink, id: docRef.id });
-        updateLinks(newLinkList);
+        console.log('res', docRef.id);
+        newLink.id = docRef.id;
+        const updatedList = {
+          ...links,
+          [docRef.id]: {
+            ...newLink,
+          },
+        };
+
+        delete updatedList['new'];
+        updateLinks(updatedList);
       });
   };
+  const linkList = Object.keys(links).map((id) => links[id]);
+  const orderList = linkList.sort((a, b) => a.order - b.order);
 
-  const adminLinks = !(links && links.length)
-    ? null
-    : links.map((item, index) => {
-        return (
-          <Draggable key={item.id} draggableId={item.id} index={index}>
-            {(provided, snapshot) => (
-              <li
-                ref={provided.innerRef}
-                {...{
-                  ...provided.draggableProps,
-                  style: {
-                    ...provided.draggableProps.style,
-                    listStyle: 'none',
-                    marginBottom: '1rem',
-                  },
-                }}
-              >
-                <AdminLink
-                  link={item}
-                  isDragging={snapshot.isDragging}
-                  handleUpdate={handleUpdate}
-                  handleDrag={{ ...provided.dragHandleProps }}
-                  handleDelete={handleDelete}
-                />
-              </li>
-            )}
-          </Draggable>
-        );
-      });
+  const adminLinks =
+    orderList &&
+    orderList.map((link, index) => {
+      return (
+        <Draggable key={link.id} draggableId={link.id} index={index}>
+          {(provided, snapshot) => (
+            <li
+              ref={provided.innerRef}
+              {...{
+                ...provided.draggableProps,
+                style: {
+                  ...provided.draggableProps.style,
+                  listStyle: 'none',
+                  marginBottom: '1rem',
+                },
+              }}
+            >
+              <AdminLink
+                link={link}
+                isDragging={snapshot.isDragging}
+                handleUpdate={handleUpdate}
+                handleDrag={{ ...provided.dragHandleProps }}
+                handleDelete={handleDelete}
+              />
+            </li>
+          )}
+        </Draggable>
+      );
+    });
 
   return (
     <>

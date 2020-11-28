@@ -7,10 +7,11 @@ export default class LinksService {
 
   getAllLinks = async () => {
     const data = await this.linksCollection.get();
-    const links = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    links.sort((a, b) => a.order - b.order);
-    console.log('links', links);
-    return links;
+    const linksEntity = {};
+    data.docs.forEach((doc) => {
+      linksEntity[doc.id] = { id: doc.id, ...doc.data() };
+    });
+    return linksEntity;
   };
 
   updateLink = async (id, payload) => {
@@ -21,8 +22,11 @@ export default class LinksService {
     links.forEach((link, index) => this.updateLink(link.id, { order: index }));
   };
 
-  addNewLink = (link) => {
-    return this.linksCollection.add(link);
+  addNewLink = (link, links) => {
+    return this.linksCollection.add(link).then((doc) => {
+      this.updateOrder(links);
+      return doc;
+    });
   };
 
   deleteLink = (id) => {
