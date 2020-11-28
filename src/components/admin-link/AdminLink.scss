@@ -2,13 +2,14 @@
 
 .admin-links {
   .drag-handle {
-    background-color: #27ea9c;
+    background-color: #ffffff;
+    transition: background-color 200ms ease-in-out;
     &__icon {
       transform: translateX(-20px);
       transition: transform 300ms ease-in-out;
     }
     &--dragging {
-      background-color: #88ffcf;
+      background-color: #ffb656;
       & .drag-handle__icon {
         transform: translateX(0);
       }
