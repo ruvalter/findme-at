@@ -16,7 +16,7 @@ const Links = () => {
 
   return (
     <div className='Links'>
-      <LinkList links={links} />
+      <LinkList links={Object.keys(links).map((id) => links[id])} />
     </div>
   );
 };
