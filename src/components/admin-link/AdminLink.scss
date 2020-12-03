@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Karla:regular,bold,italic');
+@import '../../assets/styles/colours';
 
 .admin-links {
   .drag-handle {
     background-color: #ffffff;
     transition: background-color 200ms ease-in-out;
     &__icon {
-      transform: translateX(-20px);
+      transform: translateX(-30px);
       transition: transform 300ms ease-in-out;
     }
     &--dragging {
-      background-color: #ffb656;
+      border: 1px solid $le-light-green;
+      box-shadow: 8px 7px 12px 0px #cececefc;
       & .drag-handle__icon {
         transform: translateX(0);
       }
@@ -19,6 +21,7 @@
     .drag-handle {
       &:hover {
         & .drag-handle__icon {
+          
           transform: translateX(0);
         }
       }
@@ -30,7 +33,7 @@
   &-name {
     &__input,
     &__text {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
       font-family: 'Karla';
       border: none;

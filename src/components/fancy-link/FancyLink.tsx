@@ -2,10 +2,17 @@ import React from 'react';
 import './FancyLink.scss';
 import SvgIcon from '../svg-icon/SvgIcon';
 
-function FancyLink({ backgroundColor, icon, link, linkName, textColor, type }) {
+export interface Link {
+  backgroundColor: string; 
+  icon: string; 
+  link: string; 
+  linkName: string; 
+  textColor: string;
+}
+
+const FancyLink = ({ backgroundColor, icon, link, linkName, textColor }: Link) => {
   return (
     <div
-      htmlFor={type}
       className='link'
       style={{ backgroundColor: backgroundColor, borderColor: textColor }}
     >

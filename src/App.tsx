@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import "./App.scss";
 import {
   Redirect,
@@ -9,13 +10,23 @@ import Links from "./containers/links/Links";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Admin from "./containers/admin/Admin";
+import MenuBar from './components/menu-bar/MenuBar';
 
-function App() {
+const App = () => {
+  const [routeClass, setRouteClass]: any = useState();
+
+  const handleRoute = (route: string) => {
+    setRouteClass(`${ route || 'unknown' }-route`);
+  }
+
   return (
     <Router>
+      <MenuBar handleRoute={handleRoute}></MenuBar>
       <main
+        className={routeClass}
         style={{
-          minHeight: "100vh",
+          maxHeight: "100vh",
+          maxWidth: '100%',
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -28,7 +39,7 @@ function App() {
           <Route path="/portuguesludico" exact>
             <Links />
           </Route>
-          <Route path="/admin" exact>
+          <Route path="/admin">
             <Admin />
           </Route>
           <Redirect to="/portuguesludico" />

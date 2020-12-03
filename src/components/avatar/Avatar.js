@@ -1,13 +1,21 @@
 import React from 'react';
 import './Avatar.scss';
 
-function Avatar() {
+const Avatar = ({hasLabel = true, size = 'large'}) => {
+    const sizeMap = {
+        small: '40px',
+        medium: '80px',
+        large: '112px'
+    }
     return (
         <div className="avatar">
             <div className="image-container">
-                <img src="https://d1fdloi71mui9q.cloudfront.net/7OMTzNoWRUyemfCm2cp0_22bfaaf9ec190f011141289a3cb182ed4" alt="Português Lúdico Logo"/>
+                <img 
+                    style={{ width: sizeMap[size], height: sizeMap[size] }}
+                    src="https://d1fdloi71mui9q.cloudfront.net/7OMTzNoWRUyemfCm2cp0_22bfaaf9ec190f011141289a3cb182ed4" 
+                    alt="Português Lúdico Logo"/>
             </div>
-            <p>Português Lúdico</p>
+            { hasLabel ? <p>Português Lúdico</p> : null }
         </div>
     );
 }

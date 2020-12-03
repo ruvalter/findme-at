@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { GrDrag } from 'react-icons/gr';
-import { MdDeleteSweep } from 'react-icons/md';
+import {  MdDragHandle } from 'react-icons/md';
 import EditableInput from '../editable-input/EditableInput';
+import ToolBox from '../tool-box/ToolBox';
 import './AdminLink.scss';
 
 const AdminLink = ({
@@ -18,7 +18,7 @@ const AdminLink = ({
   const handleInput = (type, ref) => {
     setTimeout(() => {
       if (ref.current) {
-        ref.current.focus();
+        ref.current.select();
       }
     }, 100);
 
@@ -31,21 +31,30 @@ const AdminLink = ({
     updateLink(newLink);
   };
 
-  const handleChange = (event) => {
+  const toggleActivation = () => {
     const newLink = { ...linkObj };
-    newLink.name = event.target.value;
+    newLink.enabled = !newLink.enabled;
+    updateLink(newLink);
+    handleUpdate(newLink.id, { enabled: newLink.enabled })
+  }
+
+  const handleChange = (event, type) => {
+    const newLink = { ...linkObj };
+    newLink[type] = event.target.value;
     updateLink(newLink);
   };
 
-  const handleBlur = (event) => {
-    console.log('blur', event);
+  const handleBlur = (event, type) => {
     const newLink = { ...linkObj };
     if (event.target.className === 'link-name__input') {
       newLink.nameEditing = false;
     } else if (event.target.className === 'link-url__input') {
       newLink.urlEditing = false;
     }
-    handleUpdate(newLink.id, { name: event.target.value });
+
+    newLink[`${type}Editing`] = false;
+
+    handleUpdate(newLink.id, { [type]: event.target.value });
     updateLink(newLink);
   };
 
@@ -56,24 +65,28 @@ const AdminLink = ({
       }`}
       style={{
         display: 'flex',
-        border: '1px solid black',
-        borderRadius: '5px',
+        borderRadius: '10px',
         padding: '1rem',
         paddingLeft: 0,
         overflow: 'hidden',
       }}
     >
-      <div
-        style={{
-          width: '2rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        {...handleDrag}
-      >
-        <GrDrag className='drag-handle__icon' />
-      </div>
+        <button 
+          type="button"
+          style={{
+            backgroundColor: 'transparent',
+            border: 'none',
+            width: '2rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '24px',
+            color: 'var(--c_blue-d)'
+          }}
+          {...handleDrag}
+          aria-pressed={false}>
+            <MdDragHandle className='drag-handle__icon' />
+        </button>
       <div style={{ width: '90%', paddingLeft: '0.5rem' }}>
         <EditableInput
           handleBlur={handleBlur}
@@ -93,17 +106,7 @@ const AdminLink = ({
           type='url'
           isEditing={linkObj.urlEditing}
         />
-        <button
-          onClick={() => handleDelete(linkObj.id)}
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '1.5rem',
-          }}
-        >
-          <MdDeleteSweep />
-        </button>
+        <ToolBox toggleActivation={toggleActivation} handleDelete={handleDelete} linkObj={linkObj}/>
       </div>
     </div>
   );

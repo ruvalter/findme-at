@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import LinkList from '../../components/link-list/LinkList';
 import './Links.scss';
 import LinksService from '../../shared/links-service';
+// import { NavLink } from 'react-router-dom';
+
+// import {  VscSettings } from 'react-icons/vsc';
 
 const addThemeClass = (theme) => document.body.classList.add(theme);
 
@@ -21,9 +24,17 @@ const Links = () => {
     return () => removeThemeClass(theme);
   }, []);
 
+  const linkList = Object.keys(links).map((id) => links[id]);
+  const orderList = linkList.sort((a, b) => a.order - b.order);
+
   return (
-    <div className='Links'>
-      <LinkList links={Object.keys(links).map((id) => links[id])} />
+    <div className='links'>
+      {/* <NavLink
+          className="links__settings"
+          to={`/admin/links`}>
+              <VscSettings />
+      </NavLink> */}
+      <LinkList links={ orderList.filter(link => link.enabled)} />
     </div>
   );
 };

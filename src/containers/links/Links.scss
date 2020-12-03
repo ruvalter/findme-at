@@ -1,3 +1,23 @@
-.Links {
+.links {
   margin: 0 1rem;
+  &__settings {
+    background-color: white;
+    color: var(--c_green-l);
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    align-items: center;
+    transition: all 300ms ease-in-out;
+    position: fixed;
+    top: .8em;
+    right: .8em;
+    &:hover:not(.nav__link--active) {
+        background-color: var(--c_pink-m);
+        color: white;
+        transform: scale(1.1);
+    }
+  }
 }

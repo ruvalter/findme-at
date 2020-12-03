@@ -24,13 +24,14 @@ const EditableInput = ({
       <input
         type='text'
         className={`link-${type}__input`}
-        onBlur={handleBlur}
+        onBlur={(event) => handleBlur(event, type)}
         ref={inputRef}
-        onChange={handleChange}
+        onChange={(event) => handleChange(event, type)}
         defaultValue={value}
         style={{ display: isEditing ? 'block' : 'none' }}
       />
       <span
+        onClick={() => handleInput(type, inputRef)}
         className={`link-${type}__text`}
         style={{ display: isEditing ? 'none' : 'inline-block' }}
       >
@@ -40,12 +41,12 @@ const EditableInput = ({
         onClick={() => handleInput(type, inputRef)}
         style={{
           fontSize: '18px',
-          display: isEditing ? 'none' : 'inline-block',
+          display: isEditing ? 'none' : 'flex',
           background: 'none',
           border: 'none',
           verticalAlign: 'middle',
           cursor: 'pointer',
-          color: 'grey',
+          color: 'var(--c_grey-d)',
         }}
       >
         <RiEdit2Fill />

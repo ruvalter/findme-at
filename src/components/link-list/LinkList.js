@@ -14,7 +14,7 @@ function LinkList({ links }) {
 
   return (
     <div className='link-list'>
-      <Avatar />
+      <div style={{ marginBottom: '2rem' }} ><Avatar /></div>
       <div style={{ marginBottom: '3rem' }}>
         {links.map((link, index) => {
           return (
