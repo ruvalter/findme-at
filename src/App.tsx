@@ -19,6 +19,7 @@ const App = () => {
   const [routeClass, setRouteClass]: any = useState();
   const [userStatus]: any = useState();
   const token  = useContext(firebaseAuth)
+  
   console.log('token', token)
 
   // useEffect(() => {
