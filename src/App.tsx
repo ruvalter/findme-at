@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import "./App.scss";
 import {
   Redirect,
@@ -11,9 +11,20 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Admin from "./containers/admin/Admin";
 import MenuBar from './components/menu-bar/MenuBar';
+import Signin from './containers/public/signin/Signin';
+import { firebaseAuth } from './shared/providers/auth-provider';
+import Signup from './containers/public/signup/Signup';
 
 const App = () => {
   const [routeClass, setRouteClass]: any = useState();
+  const [userStatus]: any = useState();
+  const token  = useContext(firebaseAuth)
+  console.log('token', token)
+
+  // useEffect(() => {
+    
+  //   setStatus({ isLogged: !!token, token})
+  // }, [token])
 
   const handleRoute = (route: string) => {
     setRouteClass(`${ route || 'unknown' }-route`);
@@ -40,7 +51,13 @@ const App = () => {
             <Links />
           </Route>
           <Route path="/admin">
-            <Admin />
+            { true ? <Admin /> : <Redirect to="/signin" />}
+          </Route>
+          <Route path="/signin">
+            { userStatus?.isLogged ? <Admin /> : <Signin/>}
+          </Route>
+          <Route path="/signup">
+            { userStatus?.isLogged ? <Admin /> : <Signup/>}
           </Route>
           <Redirect to="/portuguesludico" />
         </Switch>
