@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './MenuBar.scss';
 import Avatar from '../avatar/Avatar';
 import { IoIosPeople } from 'react-icons/io';
-import { NavLink, useLocation, useRouteMatch } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { AiOutlineLink } from 'react-icons/ai';
 
 const MenuBar = ({handleRoute}: {handleRoute: Function}) => {
     const [route, setRoute]: any = useState();
     const location = useLocation() as unknown;
-    const { path, url } = useRouteMatch();
+    // const { path, url } = useRouteMatch();
 
     useEffect(() => {
         const path = (location as Location).pathname;
