@@ -1,9 +1,8 @@
-import firebase from '../firebase/firebase';
+import { firestore } from '../firebase/firebase';
 
 export default class LinksService {
   linksPath = 'links';
-  db = firebase.firestore();
-  linksCollection = this.db.collection(this.linksPath);
+  linksCollection = firestore.collection(this.linksPath);
 
   getAllLinks = async () => {
     const data = await this.linksCollection.get();
