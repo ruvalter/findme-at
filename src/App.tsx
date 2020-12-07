@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import "./App.scss";
 import {
   Redirect,
@@ -12,20 +12,12 @@ import Footer from "./components/footer/Footer";
 import Admin from "./containers/admin/Admin";
 import MenuBar from './components/menu-bar/MenuBar';
 import Signin from './containers/public/signin/Signin';
-import { firebaseAuth } from './shared/providers/auth-provider';
 import Signup from './containers/public/signup/Signup';
 
 const App = () => {
   const [routeClass, setRouteClass]: any = useState();
-  const [userStatus]: any = useState();
-  const token  = useContext(firebaseAuth)
-  
-  console.log('token', token)
 
-  // useEffect(() => {
-    
-  //   setStatus({ isLogged: !!token, token})
-  // }, [token])
+  const authToken = useRef(localStorage.getItem('AuthToken'));
 
   const handleRoute = (route: string) => {
     setRouteClass(`${ route || 'unknown' }-route`);
@@ -48,21 +40,23 @@ const App = () => {
       >
         <Header />
         <Switch>
-          <Route path="/portuguesludico" exact>
-            <Links />
+          <Route path="/" exact>
+            <Redirect to="/admin" />
           </Route>
           <Route path="/admin">
-            { true ? <Admin /> : <Redirect to="/signin" />}
+            { !!authToken.current ? <Admin /> : <Redirect to="/signin" />}
           </Route>
           <Route path="/signin">
-            { userStatus?.isLogged ? <Admin /> : <Signin/>}
+             <Signin/>
           </Route>
           <Route path="/signup">
-            { userStatus?.isLogged ? <Admin /> : <Signup/>}
+            <Signup/>
           </Route>
-          <Redirect to="/portuguesludico" />
+          <Route path="/:exposedUrl">
+            <Links />
+            <Footer />
+          </Route>
         </Switch>
-        <Footer />
       </main>
     </Router>
   );

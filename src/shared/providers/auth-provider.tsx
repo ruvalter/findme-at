@@ -18,6 +18,7 @@ const AuthProvider = (props: any) => {
     authMethods.signup(inputs.email, inputs.password,setErrors ,setToken )
     console.log(errors, token)
   }
+
   const handleSignin = () => {
     //changed to handleSingin
     console.log('handleSignin!!!!')
@@ -33,7 +34,6 @@ const AuthProvider = (props: any) => {
   return (
     <firebaseAuth.Provider
     value={{
-      //replaced test with handleSignup
       handleSignup,
       handleSignin,
       token,

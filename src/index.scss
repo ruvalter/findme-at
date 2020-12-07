@@ -41,3 +41,11 @@ code {
 
   --c_pink-m: #fc5185;
 }
+
+
+// OVEWRITES
+
+.ant-drawer-content {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}

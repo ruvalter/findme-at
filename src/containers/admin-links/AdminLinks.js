@@ -4,10 +4,13 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import LinksService from '../../shared/links-service';
 import './AdminLinks.scss';
 import BlockButton from '../../components/buttons/block-button/BlockButton';
+import { auth } from '../../firebase/firebase';
+import DocTitle from '../../components/doc-title/DocTitle';
 
-const AdminLinks = () => {
-  document.title = 'Admin | Link Explorer';
+const AdminLinks = (props) => {
+  
   const [links, updateLinks] = useState([]);
+  const [userId, setUserId] = useState();
   const linkService = useCallback(() => new LinksService(), []);
 
   useEffect(() => {
@@ -17,6 +20,10 @@ const AdminLinks = () => {
     fetchData();
   }, [linkService]);
 
+  useEffect(() => {
+    auth.onAuthStateChanged(user => setUserId(user.uid));
+  }, [])
+  console.log('user', userId)
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
@@ -152,7 +159,7 @@ const AdminLinks = () => {
             marginBottom: '2rem',
           }}
         >
-          <h1 style={{ margin: 0, marginRight: '1rem', color: 'var(--c_blue-d)' }}>Links</h1>
+          <DocTitle  styleProps={{ margin: 0, marginRight: '1rem', color: 'var(--c_blue-d)' }} headingText="Admin Links"/>
           <BlockButton type='button' handle={handleNewLink} />
         </div>
         <DragDropContext onDragEnd={handleOnDragEnd}>
