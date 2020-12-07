@@ -8,7 +8,7 @@ const Admin = () => {
 
   return (
     <>
-      <div style={{ position: 'fixed', top: '15px', left: '100px'}}><b>Admin Dashboard -</b> https://link-explorer.web.app/portuguesludico</div>
+      {/* <div style={{ position: 'fixed', top: '15px', left: '100px'}}><b>Admin Dashboard -</b> https://link-explorer.web.app/portuguesludico</div> */}
         <Switch>
           <Route exact path={path}>
             <Redirect to={`${path}/links`} />

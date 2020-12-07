@@ -32,7 +32,7 @@ const DocTitle = ({tabTitle, headingText, srOnly=false, styleProps}: DocTitlePro
             <Helmet>
                 <title>{tabTitle ? tabTitle : headingText} | Linke Explorer </title>
             </Helmet>
-            <h1 ref={headingRef} tabIndex={-1} className={ srOnly ? 'sr-only' : ''} style={{...styleProps}}>{headingText}</h1>
+            <h1 ref={headingRef} tabIndex={-1} className={ srOnly ? 'sr-only' : ''} style={{...styleProps, outline: 'none'}}>{headingText}</h1>
         </>
     );
 }

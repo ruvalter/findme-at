@@ -49,3 +49,9 @@ code {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
+
+.le-switch {
+  &.ant-switch-checked {
+    background-color: var(--c_green-l);
+  }
+}

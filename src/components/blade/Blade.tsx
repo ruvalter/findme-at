@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Drawer } from 'antd';
 import 'antd/lib/drawer/style/index.css';
+import './Blade.scss';
 
 const Blade = ({title, visible, onClose, children}: any) => {
     const [state] = useState({ placement: 'bottom' } as any);

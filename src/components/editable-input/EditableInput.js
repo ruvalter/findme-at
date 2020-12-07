@@ -10,6 +10,8 @@ const EditableInput = ({
   value,
   isEditing,
   type,
+  placeholder = '',
+  style,
 }) => {
   return (
     <div
@@ -19,6 +21,7 @@ const EditableInput = ({
         alignItems: 'center',
         handleChange,
         inputRef,
+        ...style
       }}
     >
       <input
@@ -28,6 +31,7 @@ const EditableInput = ({
         ref={inputRef}
         onChange={(event) => handleChange(event, type)}
         defaultValue={value}
+        placeholder={ placeholder}
         style={{ display: isEditing ? 'block' : 'none' }}
       />
       <span
@@ -35,7 +39,7 @@ const EditableInput = ({
         className={`link-${type}__text`}
         style={{ display: isEditing ? 'none' : 'inline-block' }}
       >
-        {value}
+        {value ? value : placeholder}
       </span>
       <button
         onClick={() => handleInput(type, inputRef)}
