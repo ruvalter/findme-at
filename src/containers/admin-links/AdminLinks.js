@@ -6,24 +6,28 @@ import './AdminLinks.scss';
 import BlockButton from '../../components/buttons/block-button/BlockButton';
 import { auth } from '../../firebase/firebase';
 import DocTitle from '../../components/doc-title/DocTitle';
+import { getUserInfo } from '../../shared/user-service';
+
 
 const AdminLinks = (props) => {
-  
   const [links, updateLinks] = useState([]);
-  const [userId, setUserId] = useState();
-  const linkService = useCallback(() => new LinksService(), []);
+  const [user, setUser] = useState();
+  const linkService = useCallback((id) => new LinksService(id), []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      updateLinks(await linkService().getAllLinks());
+    const fetchData = () => {
+      auth.onAuthStateChanged(async (user) => {
+        const linkList = await linkService(user.uid).getAllLinks(user.uid);
+        const currentUser = await getUserInfo(user.uid);
+
+        setUser(currentUser);
+        updateLinks(linkList);
+      });
     };
     fetchData();
   }, [linkService]);
 
-  useEffect(() => {
-    auth.onAuthStateChanged(user => setUserId(user.uid));
-  }, [])
-  console.log('user', userId)
+
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
@@ -71,28 +75,29 @@ const AdminLinks = (props) => {
       name: 'Choose a label for this link',
       icon: 'new',
       order: 0,
+      profile: user?.exposedUrl,
       id: 'new',
     };
 
-    const newList = {
-      ...links,
-    };
+    // const newList = {
+    //   ...links,
+    // };
 
-    Object.keys(newList).forEach((id) => {
-      newList[id].order++;
-    });
+    // Object.keys(newList).forEach((id) => {
+    //   newList[id].order++;
+    // });
 
-    newList['new'] = {
-      ...newLink,
-    };
+    // newList['new'] = {
+    //   ...newLink,
+    // };
 
-    updateLinks(newList);
+    // updateLinks(newList);
 
-    const linkArr = Object.keys(links).map((id) => links[id]);
-    const items = linkArr.sort((a, b) => a.order - b.order);
+    // const linkArr = Object.keys(links).map((id) => links[id]);
+    // const items = linkArr.sort((a, b) => a.order - b.order);
 
     linkService()
-      .addNewLink(newLink, items)
+      .addNewLink(newLink)
       .then((docRef) => {
         newLink.id = docRef.id;
         const updatedList = {
@@ -106,12 +111,12 @@ const AdminLinks = (props) => {
         updateLinks(updatedList);
       });
   };
+
   const linkList = Object.keys(links).map((id) => links[id]);
-  const orderList = linkList.sort((a, b) => a.order - b.order);
 
   const adminLinks =
-    orderList &&
-    orderList.map((link, index) => {
+    linkList &&
+    linkList.map((link, index) => {
       return (
         <Draggable key={link.id} draggableId={link.id} index={index}>
           {(provided, snapshot) => (

@@ -18,7 +18,7 @@ export const authMethods = {
             setErrors((prev: any) => ([...prev, err.message]))
         })
   },
-  signin: (email: string, password: string, setErrors: any, setToken: any) => {
+  signin: (email: string, password: string, setErrors: any, setToken: any, setCurrentUser: any) => {
     //change from create users to...
     firebase.auth().signInWithEmailAndPassword(email, password) 
     //everything is almost exactly the same as the function above
@@ -27,8 +27,8 @@ export const authMethods = {
         //set token to localStorage 
         await localStorage.setItem('AuthToken', token)
         
-        console.log('user', res.user?.uid)
-        setToken(window.localStorage.AuthToken)
+				setToken(window.localStorage.AuthToken)
+				setCurrentUser(res.user?.uid)
         })
         .catch(err => {
         setErrors((prev: any) => ([...prev, err.message]))

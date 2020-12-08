@@ -10,8 +10,8 @@ const Signin = (props: any) => {
   
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    console.log('handleSubmit')
-    await handleSignin()
+    await handleSignin();
+
     props.history.push('/admin/links')
   }
   const handleChange = (e: any) => {

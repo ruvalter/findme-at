@@ -61,7 +61,6 @@ const AdminNetwork = () => {
     }
 
     const handleOnCloseBlade= () => {
-        console.log('called')
         setBladeStatus({visible: false})
     }
 

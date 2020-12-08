@@ -29,12 +29,12 @@ const App = () => {
       <main
         className={routeClass}
         style={{
-          maxHeight: "100vh",
+          // maxHeight: "100vh",
           maxWidth: '100%',
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          paddingTop: "3rem",
+          padding: "3rem 0 5rem",
           alignItems: "center",
         }}
       >

@@ -10,7 +10,7 @@ const Signup = (props: any) => {
   
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    console.log('handleSubmit')
+    
     //wait to signup 
     await handleSignup()
     //push home

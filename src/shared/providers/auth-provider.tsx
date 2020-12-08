@@ -8,6 +8,7 @@ const AuthProvider = (props: any) => {
   const [inputs, setInputs] = useState(initState)
   const [errors, setErrors] = useState([])
   const [token, setToken] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null)
 
 
   const handleSignup = () => {
@@ -23,8 +24,9 @@ const AuthProvider = (props: any) => {
     //changed to handleSingin
     console.log('handleSignin!!!!')
     // made signup signin
-    authMethods.signin(inputs.email, inputs.password, setErrors, setToken)
+    authMethods.signin(inputs.email, inputs.password, setErrors, setToken, setCurrentUser)
     console.log(errors, token)
+    console.log(currentUser)
   }
 
   const handleSignout = () => {
