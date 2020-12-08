@@ -51,7 +51,7 @@ const networkLinks = [
 const AdminNetwork = () => {
     const [bladeStatus, setBladeStatus] = useState({visible: false } as any);
     const [links, setLinks] = useState(networkLinks);
-    const { width, height } = useWindowSize();
+    const { width } = useWindowSize();
 
     const urlInput = useRef();
 
