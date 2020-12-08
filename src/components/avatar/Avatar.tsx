@@ -1,7 +1,7 @@
 import React from 'react';
 import './Avatar.scss';
 
-const Avatar = ({hasLabel = true, size = 'large'}) => {
+const Avatar = ({name, imageUrl, size = 'large'}: { name?: string, imageUrl: string, size: 'large' | 'medium' | 'small'}) => {
     const sizeMap = {
         small: '40px',
         medium: '80px',
@@ -12,10 +12,10 @@ const Avatar = ({hasLabel = true, size = 'large'}) => {
             <div className="image-container">
                 <img 
                     style={{ width: sizeMap[size], height: sizeMap[size] }}
-                    src="https://d1fdloi71mui9q.cloudfront.net/7OMTzNoWRUyemfCm2cp0_22bfaaf9ec190f011141289a3cb182ed4" 
-                    alt="Português Lúdico Logo"/>
+                    src={imageUrl} 
+                    alt={name}/>
             </div>
-            { hasLabel ? <p>Português Lúdico</p> : null }
+            { name ? <p>{name}</p> : null }
         </div>
     );
 }

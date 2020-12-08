@@ -62,7 +62,7 @@ const MenuBar = ({ handleRoute }: { handleRoute: Function }) => {
                                 className="nav__link"
                                 activeClassName="nav__link--active"
                                 to={`/admin/profile`}>
-                                <Avatar hasLabel={false} size="small" />
+                                <Avatar imageUrl="https://d1fdloi71mui9q.cloudfront.net/7OMTzNoWRUyemfCm2cp0_22bfaaf9ec190f011141289a3cb182ed4" size="small" />
                             </NavLink>
                         </li>
                     </ul>

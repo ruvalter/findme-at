@@ -26,12 +26,14 @@ const Links = (props: any) => {
     
     const fetchData = async () => {
       auth.onAuthStateChanged(async (user: any) => {
-        const info = await getUserInfo(user?.uid) as any;
-        theme = info.themeId;
+        const currentUser = await getUserInfo(user?.uid) as any;
+        theme = currentUser.themeId;
         const isUserLogged = localStorage.getItem('AuthToken');
-        setUser(isUserLogged as any);
-        setLoading(false);
-        addThemeClass(theme);
+        if (isUserLogged) {
+          setUser(currentUser);
+          setLoading(false);
+          addThemeClass(theme);
+        }
       });
 
       if (isMounted.current) {
@@ -62,7 +64,7 @@ const Links = (props: any) => {
               <VscSettings />
       </NavLink>
       }
-      <LinkList links={ linkList.filter((link: any) => link.enabled)} />
+      <LinkList avatarName={(user as any).name} avatarImage={(user as any).imageUrl} links={ linkList.filter((link: any) => link.enabled)} />
     </div>
   );
 };

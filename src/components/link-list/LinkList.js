@@ -4,7 +4,7 @@ import FancyLink from '../fancy-link/FancyLink';
 import SocialNetwork from '../social-network/SocialNetwork';
 import './LinkList.scss';
 
-function LinkList({ links }) {
+function LinkList({ links, avatarImage, avatarName }) {
   const backgroundColours = {
     1: 'rgb(255, 194, 19)',
     2: 'rgb(11, 175, 255)',
@@ -14,7 +14,9 @@ function LinkList({ links }) {
 
   return (
     <div className='link-list'>
-      <div style={{ marginBottom: '2rem' }} ><Avatar /></div>
+        <div style={{ marginBottom: '2rem' }} >
+          <Avatar imageUrl={avatarImage} name={avatarName} />
+        </div>
       <div style={{ marginBottom: '3rem' }}>
         {links.map((link, index) => {
           return (
