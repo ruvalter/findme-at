@@ -8,6 +8,7 @@ import Blade from '../../components/blade/Blade';
 import EditableInput from '../../components/editable-input/EditableInput';
 import { Switch } from 'antd';
 import 'antd/lib/switch/style/index.css';
+import useWindowSize from '../../shared/hooks/widow-size';
 
 const iconMap = {
     fb: <GrFacebookOption />,
@@ -50,6 +51,7 @@ const networkLinks = [
 const AdminNetwork = () => {
     const [bladeStatus, setBladeStatus] = useState({visible: false } as any);
     const [links, setLinks] = useState(networkLinks);
+    const { width, height } = useWindowSize();
 
     const urlInput = useRef();
 
@@ -123,7 +125,11 @@ const AdminNetwork = () => {
                 </div>
 
             </div>
-            <Blade title={bladeStatus.profile?.title} visible={bladeStatus.visible} onClose={handleOnCloseBlade}>
+            <Blade 
+                title={bladeStatus.profile?.title} 
+                visible={bladeStatus.visible} 
+                placement={ width > 768 ? 'right' : 'bottom'}
+                onClose={handleOnCloseBlade}>
                 <EditableInput
                     style={{ marginBottom: '1rem'}}
                     handleBlur={handleBlur}

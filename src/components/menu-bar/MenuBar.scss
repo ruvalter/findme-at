@@ -23,7 +23,7 @@ $le-outtermost-z-index: 999;
     }
     &__wrapper {
         box-sizing: border-box;
-        padding: 0 .3em;
+        padding: 0 .5em;
         background-color: #384259;
         width: 100%;
         height: 100%;
@@ -34,7 +34,7 @@ $le-outtermost-z-index: 999;
         @media only screen and (min-width: 768px) {
             flex-direction: column;
             align-content: center;
-            
+            padding: .5em 0;
         }
     }
     &__btn-container {
