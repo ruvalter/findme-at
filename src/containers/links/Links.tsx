@@ -6,6 +6,7 @@ import { getUserByExposedUrl } from '../../shared/user-service';
 import { NavLink, withRouter } from 'react-router-dom';
 import {  VscSettings } from 'react-icons/vsc';
 import { getExposedLinksByProfile } from '../../shared/links-service';
+import { useAuthContext } from '../../shared/providers/auth-provider';
 
 
 
@@ -17,6 +18,7 @@ const Links = (props: any) => {
 
   const addThemeClass = (theme: string) => document.body.classList.add(theme);
   const isMounted = useRef(true);
+  const { loggedUser } = useAuthContext();
 
   const exposedUrl = useRef(props.match.params.exposedUrl)
 
@@ -50,7 +52,7 @@ const Links = (props: any) => {
 
   return (
     <div className='links'>
-      { user && <NavLink
+      { loggedUser?.logged && <NavLink
           className="links__settings"
           to={`/admin/links`}>
               <VscSettings />

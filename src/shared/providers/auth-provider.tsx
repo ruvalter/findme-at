@@ -14,12 +14,18 @@ const AuthProvider = (props: any) => {
   const [token, setToken] = useState(null)
   const [currentUser, setCurrentUser] = useState(null);
   // eslint-disable-next-line
-  const [loggedUser, setLoggedUser] = useState(null);
+  const [loggedUser, setLoggedUser] = useState(null as any);
 
   useEffect(() => {
+
+    const isLogged = localStorage.getItem('AuthToken');
+
+    if (isLogged) {
+        setLoggedUser({logged: true})
+    }
     auth.onAuthStateChanged(async (user: any) => {
-        const userInfo = await getUserInfo(user.uid) as any;
-        setLoggedUser(userInfo);
+        const userInfo = await getUserInfo(user?.uid) as any;
+        setLoggedUser({...userInfo, logged: !!isLogged});
     });
   }, []);
 
@@ -29,7 +35,8 @@ const AuthProvider = (props: any) => {
     // middle man between firebase and signup 
     console.log('handleSignup')
     // calling signup from firebase server
-    authMethods.signup(inputs.email, inputs.password,setErrors ,setToken )
+    authMethods.signup(inputs.email, inputs.password,setErrors ,setToken );
+    setLoggedUser({...loggedUser, logged: true})
     console.log(errors, token)
   }
 
