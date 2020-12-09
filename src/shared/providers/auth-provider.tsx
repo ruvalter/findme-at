@@ -1,14 +1,28 @@
-import React, {useState, createContext} from 'react';
+import React, {useState, createContext, useContext, useEffect} from 'react';
 import { authMethods } from '../../firebase/auth-methods';
+import { auth } from '../../firebase/firebase';
+import { getUserInfo } from '../user-service';
 
 export const firebaseAuth = createContext({} as any);
+
+export const useAuthContext = () => useContext(firebaseAuth);
 
 const AuthProvider = (props: any) => {
   const initState = {email: '', password: ''}
   const [inputs, setInputs] = useState(initState)
   const [errors, setErrors] = useState([])
   const [token, setToken] = useState(null)
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null);
+  // eslint-disable-next-line
+  const [loggedUser, setLoggedUser] = useState(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user: any) => {
+        const userInfo = await getUserInfo(user.uid) as any;
+        console.log('u', userInfo)
+        setLoggedUser(userInfo);
+    });
+  }, []);
 
 
   const handleSignup = () => {
@@ -36,6 +50,7 @@ const AuthProvider = (props: any) => {
   return (
     <firebaseAuth.Provider
     value={{
+      loggedUser,
       handleSignup,
       handleSignin,
       token,

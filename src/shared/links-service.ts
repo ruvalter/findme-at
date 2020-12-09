@@ -1,51 +1,55 @@
 import { firestore } from '../firebase/firebase';
 
-export default class LinksService {
+const userDoc = (userId: any) => firestore.collection('users').doc(userId);
+   
 
-  constructor(private userId?: string) { }
+export const getAllLinks = async (userId?: string) => {
+  const data = await userDoc(userId)
+    .collection('links')
+    .orderBy('order', 'asc')
+    .get();
+  const linksEntity = {} as any;
+  data.docs.forEach((doc: any) => {
+    linksEntity[doc.id] = { id: doc.id, ...doc.data() };
+  });
+  return linksEntity;
+};
 
-  parentCollection = firestore.collection('users');
-  linksCollection = this.parentCollection.doc(this.userId).collection('links');
-
-  groupCollectionByProfile = firestore.collectionGroup('links');
-    
-
-  getAllLinks = async (id?: string) => {
-    const data = await this.linksCollection.orderBy('order', 'asc').get();
-    const linksEntity = {} as any;
-    data.docs.forEach((doc: any) => {
-      linksEntity[doc.id] = { id: doc.id, ...doc.data() };
-    });
-    return linksEntity;
-  };
-
-  getExposedLinksByProfile = async (profile: string) => {
-    const groupRef = firestore.collectionGroup('links').where('profile', '==', profile);
-    const orderedGroup = groupRef.orderBy('order', 'asc');
-    const group = await orderedGroup.get();
-    const linksEntity = {} as any;
-    group.docs.forEach((doc: any) => {
-      linksEntity[doc.id] = { id: doc.id, ...doc.data() };
-    });
-    return linksEntity;
+export const getExposedLinksByProfile = async (profile: string) => {
+  const groupRef = firestore.collectionGroup('links').where('profile', '==', profile);
+  const orderedGroup = groupRef.orderBy('order', 'asc');
+  const group = await orderedGroup.get();
+  const linksEntity = {} as any;
+  group.docs.forEach((doc: any) => {
+    linksEntity[doc.id] = { id: doc.id, ...doc.data() };
+  });
+  return linksEntity;
 }
 
-  updateLink = async (id: string, payload: any) => {
-    return await this.parentCollection.doc('vKSxuxuYWCfNl2JvwwTEUv717nD3').collection('links').doc(id).update(payload);
-  };
+export const updateLink = async (userId: string, id: string, payload: any) => {
+  return await userDoc(userId)
+    .collection('links')
+    .doc(id)
+    .update(payload);
+};
 
-  updateOrder = (links: any) => {
-    links.forEach((link: any, index: number) => this.updateLink(link.id, { order: index }));
-  };
+export const updateOrder = (userId: string, links: any) => {
+  links.forEach((link: any, index: number) => updateLink(userId, link.id, { order: index }));
+};
 
-  addNewLink = (link: any) => {
-    return this.parentCollection.doc('vKSxuxuYWCfNl2JvwwTEUv717nD3').collection('links').add(link).then((doc:any) => {
-      this.updateLink(doc.id, { id: doc.id})
+export const addNewLink = (userId: string, link: any) => {
+  return userDoc(userId)
+    .collection('links')
+    .add(link)
+    .then((doc:any) => {
+      updateLink(userId, doc.id, { id: doc.id})
       return doc;
     });
-  };
+};
 
-  deleteLink = (id: string) => {
-    return this.parentCollection.doc('vKSxuxuYWCfNl2JvwwTEUv717nD3').collection('links').doc(id).delete();
-  };
-}
+export const deleteLink = (userId: string, id: string) => {
+  return userDoc(userId)
+    .collection('links')
+    .doc(id)
+    .delete();
+};

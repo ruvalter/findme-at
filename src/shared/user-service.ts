@@ -10,6 +10,16 @@ export const getUserInfo = async (userId: string) => {
     return userInfo;
 };
 
+export const getUserByExposedUrl = async (param: string) => {
+    const userRef = firestore
+        .collection('users').where('exposedUrl', '==', param);
+
+    const user = await userRef.get();
+    const userInfo = user.docs.pop() as any;
+
+    return  await userInfo.data();
+};
+
 
   
 

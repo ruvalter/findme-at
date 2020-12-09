@@ -1,31 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminLink from '../../components/admin-link/AdminLink';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import LinksService from '../../shared/links-service';
+
 import './AdminLinks.scss';
 import BlockButton from '../../components/buttons/block-button/BlockButton';
-import { auth } from '../../firebase/firebase';
 import DocTitle from '../../components/doc-title/DocTitle';
-import { getUserInfo } from '../../shared/user-service';
+import { useAuthContext } from '../../shared/providers/auth-provider';
+import { addNewLink, deleteLink, getAllLinks, updateLink, updateOrder } from '../../shared/links-service';
 
 
-const AdminLinks = (props) => {
+const AdminLinks = () => {
   const [links, updateLinks] = useState([]);
-  const [user, setUser] = useState();
-  const linkService = useCallback((id) => new LinksService(id), []);
+  const { loggedUser } = useAuthContext();
+
 
   useEffect(() => {
-    const fetchData = () => {
-      auth.onAuthStateChanged(async (user) => {
-        const linkList = await linkService(user.uid).getAllLinks(user.uid);
-        const currentUser = await getUserInfo(user.uid);
-
-        setUser(currentUser);
-        updateLinks(linkList);
-      });
+    const fetchData = async () => {
+      const linkList = await getAllLinks(loggedUser?.userId);
+      updateLinks(linkList);
     };
     fetchData();
-  }, [linkService]);
+  }, [loggedUser]);
 
 
   const handleOnDragEnd = (result) => {
@@ -42,15 +37,14 @@ const AdminLinks = (props) => {
     });
     updateLinks(linksEntity);
 
-    linkService().updateOrder(items);
+    updateOrder(loggedUser.userId, items);
   };
 
   const handleDelete = (id) => {
     const newList = { ...links };
     delete newList[id];
 
-    linkService()
-      .deleteLink(id)
+    deleteLink(loggedUser.userId, id)
       .then(() => {
         updateLinks(newList);
       });
@@ -66,7 +60,7 @@ const AdminLinks = (props) => {
     };
 
     updateLinks(newList);
-    return linkService().updateLink(id, payload);
+    return updateLink(loggedUser.userId, id, payload);
   };
 
   const handleNewLink = () => {
@@ -75,29 +69,25 @@ const AdminLinks = (props) => {
       name: 'Choose a label for this link',
       icon: 'new',
       order: 0,
-      profile: user?.exposedUrl,
+      profile: loggedUser?.exposedUrl,
       id: 'new',
     };
 
-    // const newList = {
-    //   ...links,
-    // };
+    const newList = {
+      ...links,
+    };
 
-    // Object.keys(newList).forEach((id) => {
-    //   newList[id].order++;
-    // });
+    Object.keys(newList).forEach((id) => {
+      newList[id].order++;
+    });
 
-    // newList['new'] = {
-    //   ...newLink,
-    // };
+    newList['new'] = {
+      ...newLink,
+    };
 
-    // updateLinks(newList);
+    updateLinks(newList);
 
-    // const linkArr = Object.keys(links).map((id) => links[id]);
-    // const items = linkArr.sort((a, b) => a.order - b.order);
-
-    linkService()
-      .addNewLink(newLink)
+    addNewLink(loggedUser.userId, newLink)
       .then((docRef) => {
         newLink.id = docRef.id;
         const updatedList = {
@@ -112,7 +102,7 @@ const AdminLinks = (props) => {
       });
   };
 
-  const linkList = Object.keys(links).map((id) => links[id]);
+  const linkList = Object.keys(links).map((id) => links[id]).sort((a, b) => a.order - b.order);
 
   const adminLinks =
     linkList &&

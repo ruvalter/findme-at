@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import LinkList from '../../components/link-list/LinkList';
 import './Links.scss';
-import LinksService from '../../shared/links-service';
-import { getUserInfo } from '../../shared/user-service';
+
+import { getUserByExposedUrl } from '../../shared/user-service';
 import { NavLink, withRouter } from 'react-router-dom';
 import {  VscSettings } from 'react-icons/vsc';
-import { auth } from '../../firebase/firebase';
+import { getExposedLinksByProfile } from '../../shared/links-service';
 
 
 
@@ -25,19 +25,17 @@ const Links = (props: any) => {
     let theme: string;
     
     const fetchData = async () => {
-      auth.onAuthStateChanged(async (user: any) => {
-        const currentUser = await getUserInfo(user?.uid) as any;
-        theme = currentUser.themeId;
-        const isUserLogged = localStorage.getItem('AuthToken');
-        if (isUserLogged) {
-          setUser(currentUser);
-          setLoading(false);
-          addThemeClass(theme);
-        }
-      });
+      const currentUser = await getUserByExposedUrl(exposedUrl.current)
+      theme = currentUser.themeId;
+      const isUserLogged = localStorage.getItem('AuthToken');
+      if (isUserLogged) {
+        setUser(currentUser);
+        setLoading(false);
+        addThemeClass(theme);
+      }
 
       if (isMounted.current) {
-        updateLinks(await new LinksService().getExposedLinksByProfile(exposedUrl.current));
+        updateLinks(await getExposedLinksByProfile(exposedUrl.current));
       }
       
     };
