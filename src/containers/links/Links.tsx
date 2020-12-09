@@ -16,7 +16,6 @@ const Links = (props: any) => {
   const [user, setUser] = useState(null);
 
   const addThemeClass = (theme: string) => document.body.classList.add(theme);
-  const removeThemeClass = (theme: string) => document.body.classList.remove(theme);
   const isMounted = useRef(true);
 
   const exposedUrl = useRef(props.match.params.exposedUrl)
@@ -25,13 +24,12 @@ const Links = (props: any) => {
     let theme: string;
     
     const fetchData = async () => {
-      const currentUser = await getUserByExposedUrl(exposedUrl.current)
-      theme = currentUser.themeId;
-      const isUserLogged = localStorage.getItem('AuthToken');
-      if (isUserLogged) {
+      const currentUser = await getUserByExposedUrl(exposedUrl.current);
+
+      if (currentUser) {
         setUser(currentUser);
         setLoading(false);
-        addThemeClass(theme);
+        addThemeClass(currentUser.themeId);
       }
 
       if (isMounted.current) {
@@ -41,14 +39,12 @@ const Links = (props: any) => {
     };
     fetchData();
     return () => { 
-      removeThemeClass(theme);
       isMounted.current = false;
       exposedUrl.current = null;
     };
   }, []);
 
   const linkList = Object.keys(links).map((id: any) => links[id]);
-  // const orderList = linkList.sort((a, b) => a.order - b.order);
 
   if (loading) {
     return <span>Loading...</span>

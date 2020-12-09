@@ -15,9 +15,9 @@ export const getUserByExposedUrl = async (param: string) => {
         .collection('users').where('exposedUrl', '==', param);
 
     const user = await userRef.get();
-    const userInfo = user.docs.pop() as any;
+    const userInfoArr = user.docs.map(doc => doc.data()) as any;
 
-    return  await userInfo.data();
+    return userInfoArr[0];
 };
 
 
