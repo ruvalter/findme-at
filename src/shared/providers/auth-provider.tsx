@@ -19,7 +19,6 @@ const AuthProvider = (props: any) => {
   useEffect(() => {
     auth.onAuthStateChanged(async (user: any) => {
         const userInfo = await getUserInfo(user.uid) as any;
-        console.log('u', userInfo)
         setLoggedUser(userInfo);
     });
   }, []);
