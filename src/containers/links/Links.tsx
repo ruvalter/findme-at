@@ -20,9 +20,7 @@ const Links = (props: any) => {
 
   const exposedUrl = useRef(props.match.params.exposedUrl)
 
-  useEffect(() => {
-    let theme: string;
-    
+  useEffect(() => {    
     const fetchData = async () => {
       const currentUser = await getUserByExposedUrl(exposedUrl.current);
 
