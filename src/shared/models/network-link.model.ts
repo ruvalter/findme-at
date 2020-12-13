@@ -6,6 +6,8 @@ export interface NetworkLink {
   icon?: string;
   enabled?: boolean;
   createdAt?: Date;
+  urlEditing?: boolean;
+  nameEditing?: boolean;
 }
 
 export interface NetworkEntity {

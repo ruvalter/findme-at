@@ -52,45 +52,56 @@ const AdminNetwork = () => {
   };
 
   const handleOnCloseBlade = () => {
+    handleUpdate();
     setBladeStatus({ visible: false });
   };
 
-  const handleInput = (type: string, ref: any) => {
+  const handleInput = (type: 'url' | 'label', ref: any) => {
     setTimeout(() => {
       if (ref.current) {
         ref.current.select();
       }
     }, 100);
 
-    console.log('ref', ref);
-
     const newAccount = { ...account };
     newAccount.urlEditing = true;
     setAccount(newAccount);
   };
 
-  const handleBlur = () => {};
-
   const handleSwitchChange = async (id: string) => {
+    const newAccount = { ...account };
+    newAccount.enabled = !newAccount.enabled;
+    await setAccount(newAccount);
+  };
+
+  const handleChange = (event: any, type: 'url' | 'label') => {
+    const newAccount = { ...account };
+    newAccount[type] = event.target.value;
+    setAccount(newAccount);
+  };
+
+  const handleUpdate = async () => {
     const newList = {
       ...links,
     } as NetworkEntity;
 
-    newList[id].enabled = !newList[id].enabled;
+    newList[account.id] = {
+      ...newList[account.id],
+      ...account,
+    };
 
-    await updateAccount(loggedUser.userId, id, newList[id]);
+    delete account.urlEditing;
+
+    await updateAccount(loggedUser.userId, account.id, account);
     setLinks(newList);
   };
 
-  const handleChange = async (id: string, payload: any) => {
-    const newList = {
-      ...links,
-    } as NetworkEntity;
+  const handleBlur = (event: any, type: string) => {
+    const newAccount = { ...account };
 
-    newList[id] = { ...newList[id], ...payload };
+    newAccount.urlEditing = false;
 
-    await updateAccount(loggedUser.userId, id, newList[id]);
-    setLinks(newList);
+    setAccount(newAccount);
   };
 
   const linkList = Object.values(links).map((link) => {
@@ -175,7 +186,7 @@ const AdminNetwork = () => {
             <span>Enable</span>
             <Switch
               className='le-switch'
-              checked={links[account?.id]?.enabled}
+              checked={account.enabled}
               onChange={() => handleSwitchChange(account?.id)}
             />
           </div>

@@ -19,6 +19,5 @@ export const updateAccount = async (
   id: string,
   payload: any
 ) => {
-  console.log('payload', payload);
   return await userDoc(userId).collection('network').doc(id).update(payload);
 };
