@@ -9,7 +9,6 @@ import { useAuthContext } from '../../shared/providers/auth-provider';
 import {
   addNewLink,
   deleteLink,
-  getAllLinks,
   updateLink,
   updateOrder,
 } from '../../shared/services/links-service';
