@@ -1,70 +1,75 @@
-import React, {useState, createContext, useContext, useEffect} from 'react';
+import React, { useState, createContext, useContext, useEffect } from 'react';
 import { authMethods } from '../../firebase/auth-methods';
 import { auth } from '../../firebase/firebase';
-import { getUserInfo } from '../user-service';
+import { getUserInfo } from '../services/user-service';
 
 export const firebaseAuth = createContext({} as any);
 
 export const useAuthContext = () => useContext(firebaseAuth);
 
 const AuthProvider = (props: any) => {
-  const initState = {email: '', password: ''}
-  const [inputs, setInputs] = useState(initState)
-  const [errors, setErrors] = useState([])
-  const [token, setToken] = useState(null)
+  const initState = { email: '', password: '' };
+  const [inputs, setInputs] = useState(initState);
+  const [errors, setErrors] = useState([]);
+  const [token, setToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   // eslint-disable-next-line
   const [loggedUser, setLoggedUser] = useState(null as any);
 
   useEffect(() => {
-
     const isLogged = localStorage.getItem('AuthToken');
 
     if (isLogged) {
-        setLoggedUser({logged: true})
+      setLoggedUser({ logged: true });
     }
     auth.onAuthStateChanged(async (user: any) => {
-        const userInfo = await getUserInfo(user?.uid) as any;
-        setLoggedUser({...userInfo, logged: !!isLogged});
+      const userInfo = (await getUserInfo(user?.uid)) as any;
+      setLoggedUser({ ...userInfo, logged: !!isLogged });
     });
   }, []);
 
-
   const handleSignup = () => {
-
-    // middle man between firebase and signup 
-    console.log('handleSignup')
+    // middle man between firebase and signup
+    console.log('handleSignup');
     // calling signup from firebase server
-    authMethods.signup(inputs.email, inputs.password,setErrors ,setToken );
-    setLoggedUser({...loggedUser, logged: true})
-    console.log(errors, token)
-  }
+    authMethods.signup(inputs.email, inputs.password, setErrors, setToken);
+    setLoggedUser({ ...loggedUser, logged: true });
+    console.log(errors, token);
+  };
 
   const handleSignin = () => {
     //changed to handleSingin
-    console.log('handleSignin!!!!')
+    console.log('handleSignin!!!!');
     // made signup signin
-    authMethods.signin(inputs.email, inputs.password, setErrors, setToken, setCurrentUser)
-    console.log(errors, token)
-    console.log(currentUser)
-  }
+    authMethods.signin(
+      inputs.email,
+      inputs.password,
+      setErrors,
+      setToken,
+      setCurrentUser
+    );
+    setLoggedUser({ ...loggedUser, logged: true });
+    console.log(errors, token);
+    console.log(currentUser);
+  };
 
   const handleSignout = () => {
-    authMethods.signout(setErrors, setToken)
-  }
+    authMethods.signout(setErrors, setToken);
+  };
 
   return (
     <firebaseAuth.Provider
-    value={{
-      loggedUser,
-      handleSignup,
-      handleSignin,
-      token,
-      inputs,
-      setInputs,
-      errors,
-      handleSignout,
-    }}>
+      value={{
+        loggedUser,
+        handleSignup,
+        handleSignin,
+        token,
+        inputs,
+        setInputs,
+        errors,
+        handleSignout,
+      }}
+    >
       {props.children}
     </firebaseAuth.Provider>
   );

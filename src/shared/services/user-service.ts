@@ -1,27 +1,26 @@
-import { firestore } from '../firebase/firebase';
+import { firestore } from '../../firebase/firebase';
+
+export const userDoc = (userId: any) =>
+  firestore.collection('users').doc(userId);
 
 export const getUserInfo = async (userId: string) => {
-    const userDocRef = firestore
-        .collection('users')
-        .doc(userId);
-    const docDataRef = await userDocRef.get();
-    const userInfo = docDataRef.data();
+  const userDocRef = firestore.collection('users').doc(userId);
+  const docDataRef = await userDocRef.get();
+  const userInfo = docDataRef.data();
 
-    return userInfo;
+  return userInfo;
 };
 
 export const getUserByExposedUrl = async (param: string) => {
-    const userRef = firestore
-        .collection('users').where('exposedUrl', '==', param);
+  const userRef = firestore
+    .collection('users')
+    .where('exposedUrl', '==', param);
 
-    const user = await userRef.get();
-    const userInfoArr = user.docs.map(doc => doc.data()) as any;
+  const user = await userRef.get();
+  const userInfoArr = user.docs.map((doc) => doc.data()) as any;
 
-    return userInfoArr[0];
+  return userInfoArr[0];
 };
-
-
-  
 
 //   updateLink = async (id, payload) => {
 //     return await this.linksCollection.doc(id).update(payload);
@@ -41,5 +40,3 @@ export const getUserByExposedUrl = async (param: string) => {
 //   deleteLink = (id) => {
 //     return this.linksCollection.doc(id).delete();
 //   };
-
-

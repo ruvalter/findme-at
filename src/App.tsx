@@ -1,27 +1,34 @@
-import React, { useRef, useState } from 'react';
-import "./App.scss";
+import React, { useEffect, useState } from 'react';
+import './App.scss';
 import {
   Redirect,
   Route,
   BrowserRouter as Router,
   Switch,
-} from "react-router-dom";
-import Links from "./containers/links/Links";
-import Header from "./components/header/Header";
-import Footer from "./components/footer/Footer";
-import Admin from "./containers/admin/Admin";
+} from 'react-router-dom';
+import Links from './containers/links/Links';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
+import Admin from './containers/admin/Admin';
 import MenuBar from './components/menu-bar/MenuBar';
 import Signin from './containers/public/signin/Signin';
 import Signup from './containers/public/signup/Signup';
+import { useAuthContext } from './shared/providers/auth-provider';
 
 const App = () => {
   const [routeClass, setRouteClass]: any = useState();
+  const [isLogged, setIsLogged] = useState();
 
-  const authToken = useRef(localStorage.getItem('AuthToken'));
+  // const authToken = useRef(localStorage.getItem('AuthToken'));
+  const { loggedUser } = useAuthContext();
 
   const handleRoute = (route: string) => {
-    setRouteClass(`${ route || 'unknown' }-route`);
-  }
+    setRouteClass(`${route || 'unknown'}-route`);
+  };
+
+  useEffect(() => {
+    setIsLogged(loggedUser?.logged);
+  }, [loggedUser]);
 
   return (
     <Router>
@@ -31,28 +38,28 @@ const App = () => {
         style={{
           // maxHeight: "100vh",
           maxWidth: '100%',
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "3rem 0 5rem",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          padding: '3rem 0 5rem',
+          alignItems: 'center',
         }}
       >
         <Header />
         <Switch>
-          <Route path="/" exact>
-            <Redirect to="/admin" />
+          <Route path='/' exact>
+            <Redirect to='/admin' />
           </Route>
-          <Route path="/admin">
-            { !!authToken.current ? <Admin /> : <Redirect to="/signin" />}
+          <Route path='/admin'>
+            {isLogged || true ? <Admin /> : <Redirect to='/signin' />}
           </Route>
-          <Route path="/signin">
-             <Signin/>
+          <Route path='/signin'>
+            <Signin />
           </Route>
-          <Route path="/signup">
-            <Signup/>
+          <Route path='/signup'>
+            <Signup />
           </Route>
-          <Route path="/:exposedUrl">
+          <Route path='/:exposedUrl'>
             <Links />
             <Footer />
           </Route>
@@ -60,7 +67,7 @@ const App = () => {
       </main>
     </Router>
   );
-}
+};
 
 export default App;
 

@@ -6,32 +6,37 @@ import './AdminLinks.scss';
 import BlockButton from '../../components/buttons/block-button/BlockButton';
 import DocTitle from '../../components/doc-title/DocTitle';
 import { useAuthContext } from '../../shared/providers/auth-provider';
-import { addNewLink, deleteLink, getAllLinks, updateLink, updateOrder } from '../../shared/links-service';
-
+import {
+  addNewLink,
+  deleteLink,
+  getAllLinks,
+  updateLink,
+  updateOrder,
+} from '../../shared/services/links-service';
+import { useLinkContext } from '../../shared/providers/link.provider';
+import { LinkEntity, UserLink } from '../../shared/models/user-link.model';
 
 const AdminLinks = () => {
-  const [links, updateLinks] = useState([]);
+  const [links, updateLinks] = useState({} as LinkEntity);
   const { loggedUser } = useAuthContext();
-
+  const { userLinks } = useLinkContext() as any;
 
   useEffect(() => {
     const fetchData = async () => {
-      const linkList = await getAllLinks(loggedUser?.userId);
-      updateLinks(linkList);
+      updateLinks(userLinks);
     };
     fetchData();
-  }, [loggedUser]);
+  }, [userLinks]);
 
-
-  const handleOnDragEnd = (result) => {
+  const handleOnDragEnd = (result: any) => {
     if (!result.destination) return;
 
-    const linkArr = Object.keys(links).map((id) => links[id]);
-    const items = linkArr.sort((a, b) => a.order - b.order);
+    const linkArr = Object.keys(links).map((id: any) => links[id]);
+    const items = linkArr.sort((a: UserLink, b: UserLink) => a.order - b.order);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    const linksEntity = {};
+    const linksEntity = {} as LinkEntity;
     items.forEach((item, index) => {
       linksEntity[item.id] = { ...item, order: index };
     });
@@ -40,17 +45,16 @@ const AdminLinks = () => {
     updateOrder(loggedUser.userId, items);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     const newList = { ...links };
     delete newList[id];
 
-    deleteLink(loggedUser.userId, id)
-      .then(() => {
-        updateLinks(newList);
-      });
+    deleteLink(loggedUser.userId, id).then(() => {
+      updateLinks(newList);
+    });
   };
 
-  const handleUpdate = (id, payload) => {
+  const handleUpdate = (id: string, payload: UserLink) => {
     const newList = {
       ...links,
       [id]: {
@@ -87,22 +91,23 @@ const AdminLinks = () => {
 
     updateLinks(newList);
 
-    addNewLink(loggedUser.userId, newLink)
-      .then((docRef) => {
-        newLink.id = docRef.id;
-        const updatedList = {
-          ...links,
-          [docRef.id]: {
-            ...newLink,
-          },
-        };
+    addNewLink(loggedUser.userId, newLink).then((docRef) => {
+      newLink.id = docRef.id;
+      const updatedList = {
+        ...links,
+        [docRef.id]: {
+          ...newLink,
+        },
+      } as LinkEntity;
 
-        delete updatedList['new'];
-        updateLinks(updatedList);
-      });
+      delete updatedList['new'];
+      updateLinks(updatedList);
+    });
   };
 
-  const linkList = Object.keys(links).map((id) => links[id]).sort((a, b) => a.order - b.order);
+  const linkList = Object.keys(links)
+    .map((id) => links[id])
+    .sort((a, b) => a.order - b.order);
 
   const adminLinks =
     linkList &&
@@ -144,7 +149,7 @@ const AdminLinks = () => {
           flexDirection: 'column',
           maxWidth: '40rem',
           padding: '0 1rem',
-          width: '100%'
+          width: '100%',
         }}
       >
         <div
@@ -154,7 +159,14 @@ const AdminLinks = () => {
             marginBottom: '2rem',
           }}
         >
-          <DocTitle  styleProps={{ margin: 0, marginRight: '1rem', color: 'var(--c_blue-d)' }} headingText="Admin Links"/>
+          <DocTitle
+            styleProps={{
+              margin: 0,
+              marginRight: '1rem',
+              color: 'var(--c_blue-d)',
+            }}
+            headingText='Admin Links'
+          />
           <BlockButton type='button' handle={handleNewLink} />
         </div>
         <DragDropContext onDragEnd={handleOnDragEnd}>

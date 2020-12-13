@@ -6,13 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import AuthProvider from './shared/providers/auth-provider';
 import { HelmetProvider } from 'react-helmet-async';
+import LinkProvider from './shared/providers/link.provider';
+import NetworkLinkProvider from './shared/providers/network-link.provider';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <HelmetProvider>
-          <App />
+          <LinkProvider>
+            <NetworkLinkProvider>
+              <App />
+            </NetworkLinkProvider>
+          </LinkProvider>
         </HelmetProvider>
       </AuthProvider>
     </BrowserRouter>

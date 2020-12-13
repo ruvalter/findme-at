@@ -1,7 +1,6 @@
 import React from 'react';
 import Avatar from '../avatar/Avatar';
 import FancyLink from '../fancy-link/FancyLink';
-import SocialNetwork from '../social-network/SocialNetwork';
 import './LinkList.scss';
 
 function LinkList({ links, avatarImage, avatarName }) {
@@ -14,9 +13,9 @@ function LinkList({ links, avatarImage, avatarName }) {
 
   return (
     <div className='link-list'>
-        <div style={{ marginBottom: '2rem' }} >
-          <Avatar imageUrl={avatarImage} name={avatarName} />
-        </div>
+      <div style={{ marginBottom: '2rem' }}>
+        <Avatar imageUrl={avatarImage} name={avatarName} />
+      </div>
       <div style={{ marginBottom: '3rem' }}>
         {links.map((link, index) => {
           return (
@@ -32,7 +31,6 @@ function LinkList({ links, avatarImage, avatarName }) {
           );
         })}
       </div>
-      <SocialNetwork />
     </div>
   );
 }
