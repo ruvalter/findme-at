@@ -8,12 +8,15 @@ import { getExposedLinksByProfile } from '../../shared/services/links-service';
 import { useAuthContext } from '../../shared/providers/auth-provider';
 import { getUserByExposedUrl } from '../../shared/services/user-service';
 import SocialNetwork from '../../components/social-network/SocialNetwork';
+import { useNetworkLinkContext } from '../../shared/providers/network-link.provider';
+import { NetworkEntity } from '../../shared/models/network-link.model';
 
 const Links = (props: any) => {
   document.title = 'Links | Link Explorer';
   const [links, updateLinks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const { accounts } = useNetworkLinkContext() as { accounts: NetworkEntity };
 
   const addThemeClass = (theme: string) => document.body.classList.add(theme);
   const removeThemeClass = (theme: string) =>
@@ -66,7 +69,7 @@ const Links = (props: any) => {
         avatarImage={(user as any).imageUrl}
         links={linkList.filter((link: any) => link.enabled)}
       />
-      <SocialNetwork />
+      <SocialNetwork accounts={accounts} />
     </div>
   );
 };

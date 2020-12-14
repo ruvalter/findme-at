@@ -13,18 +13,16 @@ const AuthProvider = (props: any) => {
   const [errors, setErrors] = useState([]);
   const [token, setToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+
+  const [pending, setPending] = useState(true);
   // eslint-disable-next-line
   const [loggedUser, setLoggedUser] = useState(null as any);
 
   useEffect(() => {
-    const isLogged = localStorage.getItem('AuthToken');
-
-    if (isLogged) {
-      setLoggedUser({ logged: true });
-    }
     auth.onAuthStateChanged(async (user: any) => {
       const userInfo = (await getUserInfo(user?.uid)) as any;
-      setLoggedUser({ ...userInfo, logged: !!isLogged });
+      setLoggedUser(userInfo);
+      setPending(false);
     });
   }, []);
 
@@ -33,7 +31,7 @@ const AuthProvider = (props: any) => {
     console.log('handleSignup');
     // calling signup from firebase server
     authMethods.signup(inputs.email, inputs.password, setErrors, setToken);
-    setLoggedUser({ ...loggedUser, logged: true });
+    setLoggedUser({ ...loggedUser });
     console.log(errors, token);
   };
 
@@ -61,6 +59,7 @@ const AuthProvider = (props: any) => {
     <firebaseAuth.Provider
       value={{
         loggedUser,
+        pending,
         handleSignup,
         handleSignin,
         token,

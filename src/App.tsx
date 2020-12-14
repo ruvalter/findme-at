@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import {
   Redirect,
@@ -17,18 +17,17 @@ import { useAuthContext } from './shared/providers/auth-provider';
 
 const App = () => {
   const [routeClass, setRouteClass]: any = useState();
-  const [isLogged, setIsLogged] = useState();
 
   // const authToken = useRef(localStorage.getItem('AuthToken'));
-  const { loggedUser } = useAuthContext();
+  const { loggedUser, pending } = useAuthContext();
 
   const handleRoute = (route: string) => {
     setRouteClass(`${route || 'unknown'}-route`);
   };
 
-  useEffect(() => {
-    setIsLogged(loggedUser?.logged);
-  }, [loggedUser]);
+  if (pending) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Router>
@@ -50,9 +49,7 @@ const App = () => {
           <Route path='/' exact>
             <Redirect to='/admin' />
           </Route>
-          <Route path='/admin'>
-            {isLogged || true ? <Admin /> : <Redirect to='/signin' />}
-          </Route>
+          <Route path='/admin'>{loggedUser ? <Admin /> : <Signin />}</Route>
           <Route path='/signin'>
             <Signin />
           </Route>
@@ -70,20 +67,3 @@ const App = () => {
 };
 
 export default App;
-
-// TODO:
-//
-// For now:
-//
-// 4- Create Admin portal - high
-// 3- Create project on firebase - backend - low
-// 1- Add project to github - done
-// 2- Create project on firebase - frontend - done
-// 5- Create social network link list - done
-// 6- Create Avatar header - done
-//
-// Later
-//
-// 7- Check PWA status
-// 8- Check accessibility
-// 9- Add Typescript
