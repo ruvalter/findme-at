@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AdminLink from '../../components/admin-link/AdminLink';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import './AdminLinks.scss';
 import BlockButton from '../../components/buttons/block-button/BlockButton';
 import DocTitle from '../../components/doc-title/DocTitle';
-import { useAuthContext } from '../../shared/providers/auth-provider';
+import {
+  firebaseAuth,
+  useAuthContext,
+} from '../../shared/providers/auth-provider';
 import {
   addNewLink,
   deleteLink,
@@ -19,6 +22,7 @@ const AdminLinks = () => {
   const [links, updateLinks] = useState({} as LinkEntity);
   const { loggedUser } = useAuthContext();
   const { userLinks } = useLinkContext() as any;
+  const { handleSignout } = useContext(firebaseAuth);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,6 +108,11 @@ const AdminLinks = () => {
     });
   };
 
+  const signout = () => {
+    console.log('signing out');
+    handleSignout();
+  };
+
   const linkList = Object.keys(links)
     .map((id) => links[id])
     .sort((a, b) => a.order - b.order);
@@ -166,6 +175,9 @@ const AdminLinks = () => {
             }}
             headingText='Admin Links'
           />
+          <button type='button' onClick={signout}>
+            Logout
+          </button>
           <BlockButton type='button' handle={handleNewLink} />
         </div>
         <DragDropContext onDragEnd={handleOnDragEnd}>

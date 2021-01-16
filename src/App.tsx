@@ -29,6 +29,23 @@ const App = () => {
     return <div>Loading...</div>;
   }
 
+  // const routes = loggedUser ? (
+  //   <Route path='/admin'>{loggedUser ? <Admin /> : <Signin />}</Route>
+  // ) : (
+  //   <>
+  //     <Route path='/signin'>
+  //       <Signin />
+  //     </Route>
+  //     <Route path='/signup'>
+  //       <Signup />
+  //     </Route>
+  //     <Route path='/:exposedUrl'>
+  //       <Links />
+  //       <Footer />
+  //     </Route>
+  //   </>
+  // );
+
   return (
     <Router>
       <MenuBar handleRoute={handleRoute}></MenuBar>
@@ -46,9 +63,10 @@ const App = () => {
       >
         <Header />
         <Switch>
-          <Route path='/' exact>
+          {/* <Route path='/' exact>
             <Redirect to='/admin' />
-          </Route>
+          </Route> */}
+
           <Route path='/admin'>{loggedUser ? <Admin /> : <Signin />}</Route>
           <Route path='/signin'>
             <Signin />
@@ -60,6 +78,7 @@ const App = () => {
             <Links />
             <Footer />
           </Route>
+          <Redirect from='/' to='/admin' />
         </Switch>
       </main>
     </Router>

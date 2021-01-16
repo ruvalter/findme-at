@@ -9,6 +9,7 @@ export const useAuthContext = () => useContext(firebaseAuth);
 
 const AuthProvider = (props: any) => {
   const initState = { email: '', password: '' };
+
   const [inputs, setInputs] = useState(initState);
   const [errors, setErrors] = useState([]);
   const [token, setToken] = useState(null);
@@ -19,26 +20,34 @@ const AuthProvider = (props: any) => {
   const [loggedUser, setLoggedUser] = useState(null as any);
 
   useEffect(() => {
-    auth.onAuthStateChanged(async (user: any) => {
-      const userInfo = (await getUserInfo(user?.uid)) as any;
-      setLoggedUser(userInfo);
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const lastSignInTime = new Date(user.metadata.lastSignInTime as string);
+        const lastSignInTimeTimeStamp = Math.round(
+          lastSignInTime.getTime() / 1000
+        );
+        const yesterdayTimeStamp =
+          Math.round(new Date().getTime() / 1000) - 24 * 3600;
+        if (lastSignInTimeTimeStamp < yesterdayTimeStamp) {
+          await handleSignout();
+          setPending(false);
+          return false;
+        }
+        const userInfo = (await getUserInfo(user?.uid)) as any;
+        setLoggedUser(userInfo);
+      }
       setPending(false);
     });
   }, []);
 
   const handleSignup = () => {
-    // middle man between firebase and signup
-    console.log('handleSignup');
-    // calling signup from firebase server
     authMethods.signup(inputs.email, inputs.password, setErrors, setToken);
+
     setLoggedUser({ ...loggedUser });
     console.log(errors, token);
   };
 
   const handleSignin = () => {
-    //changed to handleSingin
-    console.log('handleSignin!!!!');
-    // made signup signin
     authMethods.signin(
       inputs.email,
       inputs.password,
@@ -46,13 +55,14 @@ const AuthProvider = (props: any) => {
       setToken,
       setCurrentUser
     );
+
     setLoggedUser({ ...loggedUser, logged: true });
     console.log(errors, token);
     console.log(currentUser);
   };
 
   const handleSignout = () => {
-    authMethods.signout(setErrors, setToken);
+    authMethods.signout(setErrors, setToken, setLoggedUser);
   };
 
   return (
@@ -60,12 +70,12 @@ const AuthProvider = (props: any) => {
       value={{
         loggedUser,
         pending,
-        handleSignup,
-        handleSignin,
         token,
         inputs,
-        setInputs,
         errors,
+        handleSignup,
+        handleSignin,
+        setInputs,
         handleSignout,
       }}
     >

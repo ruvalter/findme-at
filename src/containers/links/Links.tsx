@@ -30,18 +30,18 @@ const Links = (props: any) => {
   useEffect(() => {
     let theme: string;
     const fetchData = async () => {
+      if (isMounted.current) {
+        updateLinks(await getExposedLinksByProfile(exposedUrl.current));
+      }
+
       const currentUser = await getUserByExposedUrl(exposedUrl.current);
 
       if (currentUser) {
         setUser(currentUser);
-        setLoading(false);
         theme = currentUser?.themeId;
         addThemeClass(theme);
       }
-
-      if (isMounted.current) {
-        updateLinks(await getExposedLinksByProfile(exposedUrl.current));
-      }
+      setLoading(false);
     };
     fetchData();
     return () => {
@@ -54,12 +54,12 @@ const Links = (props: any) => {
   const linkList = Object.keys(links).map((id: any) => links[id]);
 
   if (loading) {
-    return <span>Loading...</span>;
+    return <span>Loading links...</span>;
   }
 
   return (
     <div className='links'>
-      {loggedUser?.logged && (
+      {loggedUser && (
         <NavLink className='links__settings' to={`/admin/links`}>
           <VscSettings />
         </NavLink>
