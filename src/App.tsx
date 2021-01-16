@@ -14,6 +14,7 @@ import MenuBar from './components/menu-bar/MenuBar';
 import Signin from './containers/public/signin/Signin';
 import Signup from './containers/public/signup/Signup';
 import { useAuthContext } from './shared/providers/auth-provider';
+import { CircularProgress } from '@material-ui/core';
 
 const App = () => {
   const [routeClass, setRouteClass]: any = useState();
@@ -26,7 +27,17 @@ const App = () => {
   };
 
   if (pending) {
-    return <div>Loading...</div>;
+    return (
+      <CircularProgress
+        size={50}
+        style={{
+          position: 'fixed',
+          top: 'calc(50% - 20px)',
+          left: 'calc(50% - 20px)',
+        }}
+        color='secondary'
+      />
+    );
   }
 
   // const routes = loggedUser ? (
@@ -48,7 +59,8 @@ const App = () => {
 
   return (
     <Router>
-      <MenuBar handleRoute={handleRoute}></MenuBar>
+      {loggedUser ? <MenuBar handleRoute={handleRoute}></MenuBar> : null}
+
       <main
         className={routeClass}
         style={{
@@ -63,10 +75,6 @@ const App = () => {
       >
         <Header />
         <Switch>
-          {/* <Route path='/' exact>
-            <Redirect to='/admin' />
-          </Route> */}
-
           <Route path='/admin'>{loggedUser ? <Admin /> : <Signin />}</Route>
           <Route path='/signin'>
             <Signin />

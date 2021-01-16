@@ -8,6 +8,8 @@ import AuthProvider from './shared/providers/auth-provider';
 import { HelmetProvider } from 'react-helmet-async';
 import LinkProvider from './shared/providers/link.provider';
 import NetworkLinkProvider from './shared/providers/network-link.provider';
+import { ThemeProvider } from '@material-ui/core';
+import { mainTheme } from './assets/styles/theme';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,7 +18,9 @@ ReactDOM.render(
         <HelmetProvider>
           <LinkProvider>
             <NetworkLinkProvider>
-              <App />
+              <ThemeProvider theme={mainTheme}>
+                <App />
+              </ThemeProvider>
             </NetworkLinkProvider>
           </LinkProvider>
         </HelmetProvider>

@@ -44,7 +44,6 @@ const AuthProvider = (props: any) => {
     authMethods.signup(inputs.email, inputs.password, setErrors, setToken);
 
     setLoggedUser({ ...loggedUser });
-    console.log(errors, token);
   };
 
   const handleSignin = () => {
@@ -57,7 +56,6 @@ const AuthProvider = (props: any) => {
     );
 
     setLoggedUser({ ...loggedUser, logged: true });
-    console.log(errors, token);
     console.log(currentUser);
   };
 

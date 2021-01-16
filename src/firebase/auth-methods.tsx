@@ -32,7 +32,6 @@ export const authMethods = {
       .signInWithEmailAndPassword(email, password)
       //everything is almost exactly the same as the function above
       .then(async (res) => {
-        console.log('signin res', res);
         const token = await Object.entries(res.user as object)[5][1].b;
         //set token to localStorage
         await localStorage.setItem('AuthToken', token);
